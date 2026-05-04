@@ -16,7 +16,7 @@ export function useGlobalState() {
       const computedGetters = Object.keys(getters).reduce(
         (acc, key) => ({
           ...acc,
-          [key]: new Func('return ' + getters[key])().call(acc, state) // parseData(getters[key], null, acc)?.call?.(acc, state)  //理论上不应该走parseData, unibuy代码遗留
+          [key]: new Func('return ' + getters[key].value)().call(acc, state)
         }),
         {}
       )

@@ -197,6 +197,10 @@ export default function useAgentMode(): ModeHooks {
     const jsonValidResult = isValidJsonPatchObjectString(content)
     // JSON 修复机制
     if (jsonValidResult.isError) {
+      // 确保 abortControllerMap 已初始化
+      if (!abortControllerMap || Object.keys(abortControllerMap).length === 0) {
+        abortControllerMap = {}
+      }
       abortControllerMap.errorFix = new AbortController()
       try {
         const beforeRequest = (requestParams: any) => {
