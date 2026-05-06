@@ -37,8 +37,6 @@ export default {
       [META_APP.Lang],
       [META_APP.ViewSetting]
     ],
-    setting: [
-      [META_APP.User]
-    ]
+    setting: [[META_APP.User]]
   }
 }

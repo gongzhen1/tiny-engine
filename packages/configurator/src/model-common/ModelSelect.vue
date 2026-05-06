@@ -18,7 +18,6 @@
       <tiny-grid-column type="radio" width="30"></tiny-grid-column>
       <tiny-grid-column field="nameCn" title="模型名称" show-overflow></tiny-grid-column>
       <tiny-grid-column field="description" title="模型描述" show-overflow></tiny-grid-column>
-      <tiny-grid-column field="version" title="版本" show-overflow></tiny-grid-column>
     </tiny-grid>
     <tiny-pager
       :current-page="pagerState.currentPage"
@@ -54,10 +53,6 @@ export default {
     isShow: {
       type: Boolean,
       default: false
-    },
-    isModelApi: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['modelSelect'],
@@ -76,8 +71,13 @@ export default {
     // 搜索
     const searchWords = ref('')
 
+    const selectModel = async (data) => {
+      currentSelectedModel.value = await handleSelectedModelParameters(data.row)
+      emit('modelSelect', currentSelectedModel.value)
+    }
+
     const getModels = () => {
-      getModelList(pagerState.currentPage, { nameCn: searchWords.value }).then((res) => {
+      getModelList(pagerState.currentPage, { nameCn: searchWords.value }).then(async (res) => {
         modelList.value = res.records
         pagerState.total = res.total
       })
@@ -90,24 +90,6 @@ export default {
     const pageChange = (curPage) => {
       pagerState.currentPage = curPage
       getModels()
-    }
-
-    const selectModel = async (data) => {
-      // 处理parameters
-      if (props.isModelApi) {
-        emit('modelSelect', {
-          id: data.row.id,
-          name: data.row.nameCn,
-          nameEn: data.row.nameEn,
-          description: data.row.description,
-          version: data.row.version,
-          baseUrl: data.row.modelUrl ?? '',
-          method: data.row.method
-        })
-      } else {
-        currentSelectedModel.value = await handleSelectedModelParameters(data.row)
-        emit('modelSelect', currentSelectedModel.value)
-      }
     }
 
     watch(

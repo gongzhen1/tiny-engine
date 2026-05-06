@@ -4,56 +4,38 @@
     trigger="manual"
     v-model="isShow"
     :visible-arrow="false"
-    :popper-class="['option-popper', 'fixed-left']"
+    :popper-class="['option-popper', 'fixed-left', 'model-function-popper']"
     :offset="isSecond ? 652 : 0"
-    width="860"
+    width="600"
   >
     <div class="model-function-wrap">
       <div class="model-title">
         <span>选择模型方法</span>
         <div class="right">
-          <tiny-button @click="closePopover">取消</tiny-button>
-          <tiny-button type="primary" @click="setModelFunction" :disabled="!selectedFunction">确定</tiny-button>
-          <tiny-icon-close class="tiny-svg-size" @click="closePopover"></tiny-icon-close>
+          <button-group>
+            <tiny-button type="primary" @click="setModelFunction" :disabled="!selectedFunction">确定</tiny-button>
+            <tiny-icon-close class="tiny-svg-size" @click="closePopover"></tiny-icon-close>
+          </button-group>
         </div>
       </div>
       <div class="model-set-wrap">
-        <div class="model-wrap">
-          <div class="model-groups">
-            <model-select
-              :model-page-size="5"
-              @model-select="getModel"
-              :meta="meta"
-              :isShow="isShow"
-              :isModelApi="true"
-            ></model-select>
-          </div>
-          <div class="model-parameters">
-            <tiny-grid
-              :data="selectedModel?.method || []"
-              min-height="116"
-              max-height="330"
-              @radio-change="selectModelFunction"
-            >
-              <tiny-grid-column type="radio" width="40"></tiny-grid-column>
-              <tiny-grid-column field="name" title="方法名称" show-overflow></tiny-grid-column>
-              <tiny-grid-column field="nameEn" title="英文名" show-overflow></tiny-grid-column>
-            </tiny-grid>
-          </div>
-        </div>
         <div class="model-param-wrap" v-if="selectedFunction">
           <tiny-form
             ref="ruleFormRef"
-            :model="methodBasicData"
+            :model="selectedFunction"
             :rules="methodBasicData.rules"
             label-width="100px"
             label-position="left"
           >
             <tiny-form-item label="请求URL" prop="url">
-              <tiny-input v-model="methodBasicData.url"></tiny-input>
+              <tiny-input v-model="selectedFunction.url"></tiny-input>
             </tiny-form-item>
             <tiny-form-item label="请求方式" prop="method">
-              <tiny-select v-model="methodBasicData.method" :options="methodBasicData.options"></tiny-select>
+              <tiny-select
+                v-model="selectedFunction.method"
+                :disabled="methodDisabled"
+                :options="methodBasicData.options"
+              ></tiny-select>
             </tiny-form-item>
           </tiny-form>
           <tiny-collapse v-model="activeNames">
@@ -72,40 +54,36 @@
     </div>
   </tiny-popover>
   <div class="model-api-wrap" v-if="modelValue.length">
-    <div class="model-api-item" v-for="item in modelValue" :key="item.name">
-      <span>{{ item.name }}</span>
-      <tiny-icon-del @click="removeApi(item)"></tiny-icon-del>
+    <div class="model-api-item" v-for="(item, index) in apiList" :key="item.nameEn">
+      <tiny-checkbox v-model="item.checked" @change="setModelApis">{{ item.name }}</tiny-checkbox>
+      <tiny-icon-edit @click="openPopover(item, index)"></tiny-icon-edit>
     </div>
   </div>
-  <tiny-button @click="openPopover">{{ modelValue?.name || buttonText }}</tiny-button>
+  <div v-else class="model-api-empty">当前还未选择模型</div>
 </template>
 <script setup>
-import { ref, reactive, defineProps, defineEmits } from 'vue'
+import { ref, reactive, computed, defineProps, defineEmits, watch, onMounted } from 'vue'
 import {
   Button as TinyButton,
   Popover as TinyPopover,
   Collapse as TinyCollapse,
   CollapseItem as TinyCollapseItem,
-  Grid as TinyGrid,
-  GridColumn as TinyGridColumn,
   Form as TinyForm,
   FormItem as TinyFormItem,
   Input as TinyInput,
   Select as TinySelect,
-  Notify
+  Checkbox as TinyCheckbox
 } from '@opentiny/vue'
-import { iconClose, iconDel } from '@opentiny/vue-icon'
-import ModelSelect from '../model-common/ModelSelect.vue'
+import { iconClose, iconEdit } from '@opentiny/vue-icon'
+import { useCanvas } from '@opentiny/tiny-engine-meta-register'
+import { ButtonGroup } from '@opentiny/tiny-engine-common'
+import { getModelDetail } from '../model-common/http'
 import ParamsBindGrid from './ParamsBindGrid.vue'
 
 const props = defineProps({
   meta: {
     type: Object,
     default: () => ({})
-  },
-  buttonText: {
-    type: String,
-    default: '选择模型方法'
   },
   // 协议类型
   renderType: {
@@ -129,14 +107,12 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue'])
 const TinyIconClose = iconClose()
-const TinyIconDel = iconDel()
+const TinyIconEdit = iconEdit()
 const isShow = ref(false)
 const modelValue = ref(props.meta.widget.props.modelValue || [])
 const activeNames = ref(['request', 'response'])
 const ruleFormRef = ref(null)
 const methodBasicData = reactive({
-  url: '',
-  method: '',
   options: [
     {
       label: 'GET',
@@ -161,53 +137,89 @@ const methodBasicData = reactive({
   }
 })
 
+const apiList = ref([])
+const selectedApi = ref([])
 const selectedModel = ref()
 const selectedFunction = ref()
+const selectedFunctionIndex = ref(null)
 
-const openPopover = () => {
+const methodDisabled = computed(
+  () => selectedFunction.value.url === `${selectedModel.value.modelUrl}/${selectedFunction.value.nameEn}`
+)
+
+const getModel = async () => {
+  const modelId = useCanvas().getCurrentSchema().props?.serviceModel?.id
+  if (modelId) {
+    selectedModel.value = await getModelDetail(modelId)
+    apiList.value = selectedModel.value.method.map((item) => {
+      return {
+        ...item,
+        checked: true,
+        url: `${selectedModel.value.modelUrl}/${item.nameEn}`,
+        method: 'post'
+      }
+    })
+    selectedApi.value = selectedModel.value.method.map((api) => api.name)
+  }
+}
+
+const openPopover = (editItem, editIndex) => {
+  selectedFunction.value = { ...editItem }
+  selectedFunctionIndex.value = editIndex
   isShow.value = true
 }
 
 const closePopover = () => {
+  selectedFunction.value = null
+  selectedFunctionIndex.value = null
   isShow.value = false
 }
 
-const getModel = (data) => {
-  selectedModel.value = data
-  methodBasicData.url = data.baseUrl
+const setModelApis = () => {
+  modelValue.value = apiList.value
+    .map((item) => {
+      return item.checked
+        ? {
+            url: item.url,
+            method: item.method,
+            name: item.name,
+            nameEn: item.nameEn
+          }
+        : null
+    })
+    .filter((api) => api !== null)
+  emit('update:modelValue', modelValue.value)
 }
 
 const setModelFunction = async () => {
   ruleFormRef.value.validate().then(() => {
-    if (modelValue.value.find((item) => item.name === selectedFunction.value.name)) {
-      Notify({
-        type: 'error',
-        message: '当前模型方法已选择',
-        position: 'top-right'
-      })
-    } else {
-      modelValue.value.push({
-        modelName: selectedModel.value.nameCn,
-        url: methodBasicData.url,
-        method: methodBasicData.method,
-        name: selectedFunction.value.name,
-        nameEn: selectedFunction.value.nameEn
-      })
-      emit('update:modelValue', modelValue.value)
-
-      closePopover()
-    }
+    apiList.value[selectedFunctionIndex.value] = selectedFunction.value
+    setModelApis()
+    closePopover()
   })
 }
 
-const removeApi = (apiItem) => {
-  modelValue.value = modelValue.value.filter((item) => item.name !== apiItem.name)
-  emit('update:modelValue', modelValue.value)
-}
+watch(
+  () => useCanvas().getCurrentSchema().props.serviceModel,
+  async (model) => {
+    if (model) {
+      await getModel()
+      modelValue.value = apiList.value.map((api) => {
+        return {
+          url: api.url,
+          method: api.method,
+          name: api.name,
+          nameEn: api.nameEn
+        }
+      })
+      emit('update:modelValue', modelValue.value)
+    }
+  }
+)
 
-const selectModelFunction = (data) => {
-  selectedFunction.value = data.row
-}
+onMounted(() => {
+  getModel()
+})
 </script>
 
 <style lang="less" scoped>
@@ -218,7 +230,7 @@ const selectModelFunction = (data) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 8px 0 20px 0;
+    margin: 8px 16px 20px 16px;
     .right {
       svg {
         margin-left: 10px;
@@ -239,30 +251,8 @@ const selectModelFunction = (data) => {
       max-height: 355px;
       border: 1px solid #e6e6e6;
       border-radius: 4px;
-      .model-groups {
-        width: 410px;
-        padding: 12px;
-        border-right: 1px solid #e6e6e6;
-        :deep(.tiny-tree) {
-          .tiny-tree-node__content .tiny-tree-node__content-left {
-            padding: 0;
-            .tiny-tree-node__label {
-              color: #191919;
-            }
-          }
-          .tiny-tree-node__children .tiny-tree-node__content {
-            padding: 0;
-            .tiny-tree-node__content-left .tiny-tree-node__label {
-              color: #595959;
-            }
-          }
-        }
-        .search {
-          margin-bottom: 12px;
-        }
-      }
       .model-parameters {
-        width: 412px;
+        width: 100%;
         padding: 12px;
         overflow-y: scroll;
         &::-webkit-scrollbar {
@@ -296,7 +286,10 @@ const selectModelFunction = (data) => {
 
     .model-param-wrap {
       .tiny-form {
-        padding: 12px;
+        padding: 12px 28px;
+      }
+      .tiny-collapse.tiny-collapse .tiny-collapse-item {
+        padding: 0 12px;
       }
     }
   }
@@ -309,14 +302,29 @@ const selectModelFunction = (data) => {
   .model-api-item {
     display: flex;
     justify-content: space-between;
-    height: 24px;
+    height: 28px;
+    line-height: 28px;
     align-items: center;
-    padding: 2px;
+    padding: 0 8px;
     border-bottom: 1px solid var(--te-component-common-border-color-divider);
 
     svg {
       cursor: pointer;
+      font-size: 16px;
+      opacity: 0.4;
+      color: var(--te-component-common-text-color-primary);
     }
   }
+}
+
+.model-api-empty {
+  color: var(--te-common-text-secondary);
+}
+</style>
+<style lang="less">
+.model-function-popper.model-function-popper.model-function-popper.model-function-popper {
+  border-radius: 0;
+  box-shadow: -6px 0px 3px 0px var(--te-configurator-common-panel-shadow-color);
+  padding: 0;
 }
 </style>

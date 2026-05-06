@@ -224,4 +224,56 @@ router.post('block-history/create', async (ctx) => {
   ctx.body = await mockService.blockHistoryService.create(ctx.request.body)
 })
 
+router.get('/app-center/api/apps/page', async (ctx) => {
+  const { name, orderBy, createdBy } = ctx.query
+  ctx.body = await mockService.appsService.list(name, orderBy, createdBy)
+})
+
+router.post('/app-center/api/apps/create', async (ctx) => {
+  ctx.body = await mockService.appsService.create(ctx.request.body)
+})
+
+router.get('/app-center/api/apps/delete/:id', async (ctx) => {
+  const { id } = ctx.params
+  ctx.body = await mockService.appsService.delete(id)
+})
+
+// 获取app详情
+router.get('/app-center/api/apps/detail/:id', async (ctx) => {
+  const { id } = ctx.params
+  ctx.body = await mockService.appsService.find(id)
+})
+
+// 获取appSchema
+router.get('/app-center/v1/api/apps/schema/:id', async (ctx) => {
+  const { id } = ctx.params
+  ctx.body = await mockService.appsService.findSchema(id)
+})
+
+router.get('/app-center/api/app-template/list', async (ctx) => {
+  ctx.body = await mockService.templateService.list(ctx.request.body)
+})
+
+router.get('/material-center/api/business-category/find', async (ctx) => {
+  const { group } = ctx.query
+  ctx.body = await mockService.templateService.searchGroup(group)
+})
+
+router.post('/material-center/api/model/create', async (ctx) => {
+  ctx.body = await mockService.modelService.create(ctx.request.body)
+})
+
+router.delete('/material-center/api/model/delete/:id', async (ctx) => {
+  const { id } = ctx.params
+  ctx.body = await mockService.modelService.delete(id)
+})
+
+router.get('/material-center/api/model/list', async (ctx) => {
+  ctx.body = await mockService.modelService.list(ctx.request.body)
+})
+
+router.put('/material-center/api/model/update/:id', async (ctx) => {
+  const { id } = ctx.params
+  ctx.body = await mockService.modelService.update(id, ctx.request.body)
+})
 export default router

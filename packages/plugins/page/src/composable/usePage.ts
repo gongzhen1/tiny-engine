@@ -22,6 +22,7 @@ import {
   useModal,
   useNotify,
   getMetaApi,
+  getMergeMeta,
   META_SERVICE
 } from '@opentiny/tiny-engine-meta-register'
 import http from '../http'
@@ -115,22 +116,52 @@ export interface MaterialsOptions {
 }
 
 const generateCssString = (pageOptions: PageOptions, materialsOptions: MaterialsOptions) => {
-  if (!pageOptions?.pageBaseStyle?.className || !pageOptions?.pageBaseStyle?.style) {
-    return ''
+  const enableStructuredCss = getMergeMeta('engine.config')?.enableStructuredCss
+
+  if (!enableStructuredCss) {
+    if (!pageOptions?.pageBaseStyle?.className || !pageOptions?.pageBaseStyle?.style) {
+      return ''
+    }
+
+    const formatCssRule = (className: string, style: string) => `.${className} {\n  ${style.trim()}\n}\n`
+    const baseStyle = `.${pageOptions.pageBaseStyle.className}{\r\n ${pageOptions.pageBaseStyle.style}\r\n}\r\n`
+
+    if (!materialsOptions.useBaseStyle) {
+      return baseStyle
+    }
+
+    return [
+      formatCssRule(pageOptions.pageBaseStyle.className, pageOptions.pageBaseStyle.style),
+      formatCssRule(materialsOptions.blockBaseStyle.className, materialsOptions.blockBaseStyle.style),
+      formatCssRule(materialsOptions.componentBaseStyle.className, materialsOptions.componentBaseStyle.style)
+    ].join('\n')
   }
 
-  const formatCssRule = (className: string, style: string) => `.${className} {\n  ${style.trim()}\n}\n`
-  const baseStyle = `.${pageOptions.pageBaseStyle.className}{\r\n ${pageOptions.pageBaseStyle.style}\r\n}\r\n`
-
-  if (!materialsOptions.useBaseStyle) {
-    return baseStyle
+  let cssObject: Record<string, any> = {}
+  const parseStyle = (styleString: string) => {
+    const styleObj: Record<string, string> = {}
+    const styleItems = styleString.split(';')
+    styleItems.forEach((item: string) => {
+      if (item) {
+        const stylekeyValue = item.split(':')
+        styleObj[stylekeyValue[0].trim()] = stylekeyValue[1].trim()
+      }
+    })
+    return styleObj
+  }
+  if (pageOptions?.pageBaseStyle?.className && pageOptions?.pageBaseStyle?.style) {
+    cssObject[`.${pageOptions.pageBaseStyle.className}`] = parseStyle(pageOptions.pageBaseStyle.style)
   }
 
-  return [
-    formatCssRule(pageOptions.pageBaseStyle.className, pageOptions.pageBaseStyle.style),
-    formatCssRule(materialsOptions.blockBaseStyle.className, materialsOptions.blockBaseStyle.style),
-    formatCssRule(materialsOptions.componentBaseStyle.className, materialsOptions.componentBaseStyle.style)
-  ].join('\n')
+  if (materialsOptions.useBaseStyle) {
+    cssObject = {
+      ...cssObject,
+      [`.${materialsOptions.blockBaseStyle.className}`]: parseStyle(materialsOptions.blockBaseStyle.style),
+      [`.${materialsOptions.componentBaseStyle.className}`]: parseStyle(materialsOptions.componentBaseStyle.style)
+    }
+  }
+
+  return cssObject
 }
 
 const getDefaultPage = () => {

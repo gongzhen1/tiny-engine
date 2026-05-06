@@ -35,14 +35,15 @@
             <div class="empty" v-else>暂无相关数据</div>
           </div>
         </tiny-popover>
-        <tiny-popover :visible-arrow="false" width="150" trigger="click">
+        <tiny-popover :visible-arrow="false" width="260" trigger="click">
           <template #reference>
             <div>
               <svg-icon class="user-icon" name="default-user"></svg-icon>
             </div>
           </template>
           <div class="user-name">
-            <svg-icon class="user-icon" name="default-user"></svg-icon>{{ userInfo.username }}
+            <svg-icon class="user-icon" name="default-user"></svg-icon>
+            <div class="name">{{ userInfo.username }}</div>
           </div>
           <div class="divider"></div>
           <div class="user-out" @click="logOut">
@@ -68,15 +69,15 @@
   </div>
 </template>
 
-<script>
-import { ref, computed, onMounted } from 'vue'
+<script lang="ts">
+import { ref, computed, onMounted, type Component } from 'vue'
 import { iconArrowLeft } from '@opentiny/vue-icon'
 import { getMetaApi, META_SERVICE, getMergeMeta } from '@opentiny/tiny-engine-meta-register'
 import { Popover } from '@opentiny/vue'
 
 export default {
   components: {
-    TinyPopover: Popover,
+    TinyPopover: Popover as Component,
     TinyIconArrowLeft: iconArrowLeft()
   },
   props: {
@@ -111,11 +112,15 @@ export default {
           })
         : []
     })
-    const tenantValue = computed(() =>
-      enableLogin
-        ? tenantList.value.find((item) => item.id === getBaseInfo().tenantId) || tenantList.value[0]
-        : { ...getBaseInfo(), label: 'Public' }
-    )
+    const tenantValue = computed(() => {
+      if (!enableLogin) {
+        return { ...getBaseInfo(), label: 'Public' }
+      }
+
+      return getBaseInfo().tenantId
+        ? tenantList.value.find((item) => item.id === getBaseInfo().tenantId) || { id: '', label: '请选择组织' }
+        : tenantList.value[0]
+    })
 
     const changeTenant = (id) => {
       const baseUrl = `${window.location.origin}${window.location.pathname}?type=app&`
@@ -239,9 +244,20 @@ export default {
 }
 .user-name {
   color: var(--te-layout-common-text-color-weaken);
+  display: flex;
+  align-items: center;
   .user-icon {
     margin-right: 6px;
     font-size: 20px;
+  }
+  .name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 限制为2行 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    width: calc(100% - 26px);
   }
 }
 .divider {

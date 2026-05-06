@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="placeholder-layer" v-if="!TableModel || !TableModel?.id">请选择表格模型</div>
+    <div class="placeholder-layer" v-if="!tableModel || !tableModel?.id">请选择表格模型</div>
     <template v-else>
       <tiny-grid ref="gridRef" :data="tableData" v-bind="gridState">
         <tiny-grid-column v-if="gridState.selectedEnabled" type="selection" width="60"></tiny-grid-column>
@@ -60,7 +60,8 @@ import {
   DatePicker as TinyDatePicker,
   Numeric as TinyNumeric,
   Pager as TinyPager,
-  Popover as TinyPopover
+  Popover as TinyPopover,
+  Notify
 } from '@opentiny/vue'
 import * as tinyVueIcon from '@opentiny/vue-icon'
 import axios from 'axios'
@@ -102,7 +103,7 @@ const attrs = useAttrs()
 
 const gridRef = ref()
 
-const TableModel = computed(() => props.serviceModel)
+const tableModel = computed(() => props.serviceModel)
 
 const tableData = ref(props.modelValue)
 
@@ -169,13 +170,41 @@ const insertApi = (data = {}) => {
   if (!apiInfo) {
     return undefined
   }
-  return axios[apiInfo.method](apiInfo.url, data)
-    .then((res) => {
-      if (res.status === 200) {
-        return res.data
-      } else {
-        throw new Error('request fail')
+  return axios.post(apiInfo.url, { nameEn: tableModel.value.nameEn, params: data }).catch((err) => {
+    throw new Error(err)
+  })
+}
+
+const queryApi = (data = {}) => {
+  const apiInfo = props.modelApis.find((api) => api.nameEn === 'queryApi')
+  if (!apiInfo) {
+    return undefined
+  }
+  // 处理查询参数
+  const params = Object.fromEntries(tableModel.value.parameters.map((item) => [item.prop, null]))
+  return axios
+    .post(apiInfo.url, {
+      currentPage: pagerState.currentPage || 1,
+      pageSize: pagerState.pageSize || 10,
+      nameEn: tableModel.value.nameEn,
+      nameCn: tableModel.value.nameCn,
+      params: {
+        ...params,
+        ...data
       }
+    })
+    .then((res) => {
+      if (res.data.error) {
+        Notify({
+          type: 'error',
+          message: res.data.error.message,
+          position: 'top-right'
+        })
+        return
+      }
+      tableData.value = res.data.data.list
+      pagerState.total = res.data.data.total
+      return res
     })
     .catch((err) => {
       throw new Error(err)
@@ -187,36 +216,34 @@ const updateApi = (data) => {
   if (!apiInfo) {
     return undefined
   }
-  return axios[apiInfo.method](apiInfo.url, data)
-    .then((res) => {
-      if (res.status === 200) {
-        return res.data
-      } else {
-        throw new Error('request fail')
-      }
+  const requestData = {}
+  tableModel.value.parameters.forEach((item) => {
+    if (data[item.prop]) {
+      requestData[item.prop] = data[item.prop]
+    }
+  })
+  return axios
+    .post(apiInfo.url, {
+      nameEn: tableModel.value.nameEn,
+      data: requestData,
+      params: { id: data.id }
     })
-    .catch((err) => {
-      throw new Error(err)
-    })
-}
-
-const queryApi = (
-  { currentPage, pageSize, data } = { currentPage: pagerState.currentPage, pageSize: pagerState.pageSize }
-) => {
-  const apiInfo = props.modelApis.find((api) => api.nameEn === 'queryApi')
-  if (!apiInfo) {
-    return undefined
-  }
-  return axios[apiInfo.method](`${apiInfo.url}?currentPage=${currentPage}&pageSize=${pageSize}`, { params: data })
     .then((res) => {
-      if (res.status === 200) {
-        if (res.data.code === 200) {
-          tableData.value = res.data.data
-          pagerState.total = res.data.total
-          return res.data
-        }
+      if (res.data.error) {
+        Notify({
+          type: 'error',
+          message: res.data.error.message,
+          position: 'top-right'
+        })
+        return
       }
-      throw new Error('request fail')
+      Notify({
+        type: 'success',
+        message: '修改成功',
+        position: 'top-right'
+      })
+      queryApi()
+      return res
     })
     .catch((err) => {
       throw new Error(err)
@@ -228,13 +255,24 @@ const deleteApi = (evidence) => {
   if (!apiInfo) {
     return undefined
   }
-  return axios[apiInfo.method](apiInfo.url, { params: evidence })
+  return axios
+    .post(apiInfo.url, { ...evidence, nameEn: tableModel.value.nameEn })
     .then((res) => {
-      if (res.status === 200) {
-        return res.data
-      } else {
-        throw new Error('request fail')
+      if (res.data.error) {
+        Notify({
+          type: 'error',
+          message: res.data.error.message,
+          position: 'top-right'
+        })
+        return
       }
+      Notify({
+        type: 'success',
+        message: '已删除',
+        position: 'top-right'
+      })
+      queryApi()
+      return res
     })
     .catch((err) => {
       throw new Error(err)

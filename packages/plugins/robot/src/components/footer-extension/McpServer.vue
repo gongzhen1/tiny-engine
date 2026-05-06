@@ -2,7 +2,7 @@
   <div>
     <footer-button :active="activeCount > 0" tooltip-content="MCP工具" @update:active="handleVisibleToggle">
       <template #icon>
-        <IconPlugin class="plugin-common_icon" />
+        <svg-icon name="plugin" class="plugin-common_icon"></svg-icon>
       </template>
       <template #text> MCP工具 </template>
     </footer-button>
@@ -17,7 +17,7 @@
         :show-market-tab="false"
         @plugin-expand="handlePluginExpand"
         @plugin-add="updateMcpServerStatus"
-        @plugin-toggle="handlePluginToggle"
+        @plugin-toggle="updateMcpServerToggle"
         @tool-toggle="updateMcpServerToolStatus"
       />
     </div>
@@ -27,7 +27,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { McpServerPicker, type PluginInfo, type PopupConfig } from '@opentiny/tiny-robot'
-import { IconPlugin } from '@opentiny/tiny-robot-svgs'
 import useMcpServer from '../../composables/features/useMcp'
 import FooterButton from '../chat/FooterButton.vue'
 
@@ -51,13 +50,9 @@ const {
   inUseMcpServers: installedPlugins,
   refreshMcpServerTools,
   updateMcpServerToolStatus,
-  updateMcpServerStatus
+  updateMcpServerStatus,
+  updateMcpServerToggle
 } = useMcpServer()
-
-// 插件状态切换
-const handlePluginToggle = (plugin: PluginInfo, enabled: boolean) => {
-  plugin.enabled = enabled
-}
 
 // 插件展开状态变化
 const handlePluginExpand = (plugin: PluginInfo, expanded: boolean) => {

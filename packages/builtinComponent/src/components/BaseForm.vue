@@ -115,17 +115,9 @@ const insertApi = (data = modelData.value) => {
   if (!apiInfo) {
     return undefined
   }
-  return axios[apiInfo.method](apiInfo.url, data)
-    .then((res) => {
-      if (res.status === 200) {
-        return res.data
-      } else {
-        throw new Error('request fail')
-      }
-    })
-    .catch((err) => {
-      throw new Error(err)
-    })
+  return axios.post(apiInfo.url, { nameEn: formModel.value.nameEn, params: data }).catch((err) => {
+    throw new Error(err)
+  })
 }
 
 const updateApi = (data = modelData.value) => {
@@ -133,13 +125,13 @@ const updateApi = (data = modelData.value) => {
   if (!apiInfo) {
     return undefined
   }
-  return axios[apiInfo.method](apiInfo.url, data)
-    .then((res) => {
-      if (res.status === 200) {
-        return res.data
-      } else {
-        throw new Error('request fail')
-      }
+  const id = data.id
+  delete data.id
+  return axios
+    .post(apiInfo.url, {
+      nameEn: formModel.value.nameEn,
+      data: data,
+      params: { id }
     })
     .catch((err) => {
       throw new Error(err)
@@ -151,36 +143,32 @@ const queryApi = ({ currentPage, pageSize, data } = {}) => {
   if (!apiInfo) {
     return undefined
   }
-  return axios[apiInfo.method](`${apiInfo.url}?currentPage=${currentPage || 1}&pageSize=${pageSize || 10}`, {
-    params: data || modelData.value
-  })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.data
+  // 处理查询参数
+  const params = Object.fromEntries(formModel.value.parameters.map((item) => [item.prop, null]))
+  return axios
+    .post(apiInfo.url, {
+      currentPage: currentPage || 1,
+      pageSize: pageSize || 10,
+      nameEn: formModel.value.nameEn,
+      nameCn: formModel.value.nameCn,
+      params: {
+        ...params,
+        ...(data || modelData.value)
       }
-      throw new Error('request fail')
     })
     .catch((err) => {
       throw new Error(err)
     })
 }
 
-const deleteApi = (evidence = { id: modelData.value?.id }) => {
+const deleteApi = () => {
   const apiInfo = props.modelApis.find((api) => api.nameEn === 'deleteApi')
   if (!apiInfo) {
     return undefined
   }
-  return axios[apiInfo.method](apiInfo.url, { params: evidence })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.data
-      } else {
-        throw new Error('request fail')
-      }
-    })
-    .catch((err) => {
-      throw new Error(err)
-    })
+  return axios.post(apiInfo.url, { id: modelData.value?.id, nameEn: formModel.value.nameEn }).catch((err) => {
+    throw new Error(err)
+  })
 }
 
 const initFormData = () => {

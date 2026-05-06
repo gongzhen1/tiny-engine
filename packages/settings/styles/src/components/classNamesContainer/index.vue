@@ -105,12 +105,12 @@
 /* metaService: engine.setting.styles.ClassNamesContainer-index */
 import { computed, reactive, ref, nextTick, watch, watchEffect } from 'vue'
 import { Select as TinySelect } from '@opentiny/vue'
-import { useProperties, useCanvas, useHistory, useHelp } from '@opentiny/tiny-engine-meta-register'
+import { useProperties, useCanvas, useHistory, useHelp, getMergeMeta } from '@opentiny/tiny-engine-meta-register'
 import { LinkButton } from '@opentiny/tiny-engine-common'
-import { CodeConfigurator } from '@opentiny/tiny-engine-configurator'
 import { formatString } from '@opentiny/tiny-engine-common/js/ast'
+import { CodeConfigurator } from '@opentiny/tiny-engine-configurator'
 import useStyle, { updateGlobalStyleStr } from '../../js/useStyle'
-import { stringify, getSelectorArr } from '../../js/parser'
+import { stringify, getSelectorArr, parser } from '../../js/parser'
 
 const { getSchema, propsUpdateKey, setProp } = useProperties()
 
@@ -449,14 +449,26 @@ watchEffect(() => {
 })
 
 const save = ({ content }) => {
-  const cssString = formatString(content.replace(/"/g, "'"), 'css')
+  const enableStructuredCss = getMergeMeta('engine.config')?.enableStructuredCss
+  let cssData = null
+
+  if (enableStructuredCss) {
+    const { styleObject } = parser(content)
+    const cssObject = {}
+    Object.keys(styleObject).forEach((styleKey) => {
+      cssObject[styleKey] = styleObject[styleKey].rules
+    })
+    cssData = cssObject
+  } else {
+    cssData = formatString(content.replace(/"/g, "'"), 'css')
+  }
+
   const { addHistory } = useHistory()
   const { updateRect } = useCanvas().canvasApi.value
   const { updateSchema } = useCanvas()
 
-  updateSchema({ css: cssString })
+  updateSchema({ css: cssData })
   state.schemaUpdateKey++
-
   addHistory()
   updateRect()
 }

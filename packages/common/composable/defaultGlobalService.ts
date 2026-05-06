@@ -1,4 +1,11 @@
-import { useMessage, defineService, getMetaApi, META_SERVICE } from '@opentiny/tiny-engine-meta-register'
+import {
+  useCanvas,
+  useResource,
+  useMessage,
+  defineService,
+  getMetaApi,
+  META_SERVICE
+} from '@opentiny/tiny-engine-meta-register'
 import { reactive, watch } from 'vue'
 
 const getBaseInfo = () => {
@@ -49,32 +56,31 @@ const userState = reactive({
     username: '',
     token: null,
     expireTime: null,
-    tenantId: ''
+    tenantId: '',
+    tenant: []
   },
   needToLogin: false
 })
 
+const { subscribe, publish } = useMessage()
+
 const getLoginStatus = () => userState.needToLogin
 
-const setNeedToLogin = (value: boolean, tenantId: any) => {
+const setNeedToLogin = (value: boolean) => {
   userState.needToLogin = value
+
   if (!value) {
-    const baseUrl = `${window.location.origin}${window.location.pathname}?type=app&`
-    const id = getBaseInfo().id
-    const baseTenantId = getBaseInfo().tenantId
-
-    // 浏览器Url没有组织id，都默认公共组织，应用id默认为公共组织的应用1
-    if (!baseTenantId) {
-      window.location.href = `${baseUrl}id=1&tenant=${tenantId}`
-    }
-
-    if (baseTenantId && !id) {
-      window.location.href = `${baseUrl}tenant=${baseTenantId}`
-    }
-
-    if (baseTenantId && id) {
-      window.location = window.location
-    }
+    watch(
+      useCanvas().isCanvasApiReady,
+      (ready) => {
+        if (ready) {
+          useResource().fetchResource()
+        }
+      },
+      {
+        immediate: true
+      }
+    )
   }
 }
 
@@ -86,7 +92,12 @@ const setUserInfo = (data: any) => {
 
 const fetchUserInfo = () => {
   // 获取登录用户信息
-  return getMetaApi(META_SERVICE.Http).get('/platform-center/api/user/me')
+  return getMetaApi(META_SERVICE.Http).get('/platform-center/api/user/me', {
+    transformRequest: (data: any, headers: any) => {
+      delete headers['x-lowcode-org']
+      return data
+    }
+  })
 }
 
 const setTenantInfo = (id: any) => {
@@ -100,8 +111,6 @@ const fetchAppInfo = (appId: string) => getMetaApi(META_SERVICE.Http).get(`/app-
 // 获取应用列表
 const fetchAppList = (platformId: string) =>
   getMetaApi(META_SERVICE.Http).get(`/app-center/api/apps/list/${platformId}`)
-
-const { subscribe, publish } = useMessage()
 
 const postLocationHistoryChanged = (data: any) => publish({ topic: 'locationHistoryChanged', data })
 

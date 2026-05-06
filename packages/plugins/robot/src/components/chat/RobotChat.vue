@@ -36,8 +36,7 @@
           :placeholder="GeneratingStatus.includes(props.status) ? '正在思考中...' : '请输入您的问题'"
           :clearable="true"
           :loading="GeneratingStatus.includes(props.status)"
-          :showWordLimit="true"
-          :maxLength="4000"
+          :showWordLimit="false"
           @submit="handleSendMessage"
           @cancel="handleAbortRequest"
           :allowFiles="selectedAttachments.length < 1 && props.allowFiles"
@@ -177,7 +176,7 @@ const getSvgIcon = (name: string, style?: CSSProperties) => {
   return h(resolveComponent('svg-icon'), { name, style: { fontSize: '32px', ...style } })
 }
 const aiAvatar = getSvgIcon('AI')
-const welcomeIcon = getSvgIcon('AI', { fontSize: '48px' })
+const welcomeIcon = getSvgIcon('AI', { fontSize: '44px' })
 
 const contentRenderers = computed(() => ({
   markdown: MarkdownRenderer,
@@ -304,6 +303,15 @@ const handlePromptItemClick = (ev: unknown, item: { description?: string }) => {
     display: flex;
     align-items: center;
     justify-content: center;
+    .tr-welcome__title {
+      font-size: 30px;
+    }
+  }
+  :deep(.tr-welcome__description) {
+    font-size: 16px;
+  }
+  :deep(.tr-prompt__content-description) {
+    font-size: 12px;
   }
 
   &.tr-container.tr-container {
@@ -373,6 +381,17 @@ const handlePromptItemClick = (ev: unknown, item: { description?: string }) => {
       .tr-bubble__content {
         padding: 8px 0 0;
       }
+    }
+    :deep(.tr-welcome__title-wrapper) {
+      .tr-welcome__title {
+        font-size: 32px;
+      }
+    }
+    :deep(.tr-prompt__content-description) {
+      font-size: 14px;
+    }
+    :deep(.footer-button-wrapper) {
+      padding: 0 12px;
     }
   }
 
@@ -453,7 +472,7 @@ const handlePromptItemClick = (ev: unknown, item: { description?: string }) => {
     }
   }
   .tiny-sender__input-field-wrapper .tiny-textarea__inner {
-    font-size: 20px;
+    font-size: 14px;
   }
 }
 :deep(.action-buttons__icon) {

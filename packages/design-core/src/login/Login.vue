@@ -14,7 +14,7 @@
         ></tiny-input>
       </tiny-form-item>
       <tiny-form-item>
-        <tiny-button type="primary" @click="handleLogin"> 登录 </tiny-button>
+        <tiny-button :disabled="!isReady" type="primary" @click="handleLogin"> 登录 </tiny-button>
       </tiny-form-item>
     </tiny-form>
     <div class="login-bottom">
@@ -29,9 +29,9 @@
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { TinyForm, TinyFormItem, TinyInput, TinyButton } from '@opentiny/vue'
-import { getMetaApi, META_SERVICE, useModal } from '@opentiny/tiny-engine-meta-register'
+import { getMetaApi, META_SERVICE } from '@opentiny/tiny-engine-meta-register'
 import useLogin from './js/useLogin'
 
 export default {
@@ -43,14 +43,16 @@ export default {
   },
   emits: ['changeStatus'],
   setup(props, { emit }) {
-    const { fetchUserInfo, setUserInfo, setTenantInfo, setNeedToLogin, getBaseInfo } = getMetaApi(
-      META_SERVICE.GlobalService
-    )
+    const { fetchUserInfo, setUserInfo, setNeedToLogin } = getMetaApi(META_SERVICE.GlobalService)
     const state = reactive({
       loginData: {
         username: '',
         password: ''
       }
+    })
+
+    const isReady = computed(() => {
+      return state.loginData.username && state.loginData.password
     })
 
     const handleLogin = () => {
@@ -63,18 +65,13 @@ export default {
           localStorage.setItem('engineToken', data.token)
           fetchUserInfo().then((infoData: any) => {
             if (infoData) {
-              const tenantId = getBaseInfo().tenantId ? getBaseInfo().tenantId : infoData.tenant[0]?.id
               setUserInfo({ ...data, ...infoData })
-              setTenantInfo(tenantId)
-                .then((tenantData) => {
-                  localStorage.setItem('engineToken', tenantData.token)
-                  setNeedToLogin(false, tenantId)
-                })
-                .catch((error) => {
-                  useModal().message({ message: error.message, status: 'error' })
-                })
+              setNeedToLogin(false)
             }
           })
+        })
+        .catch(() => {
+          setNeedToLogin(true)
         })
     }
 
@@ -85,8 +82,10 @@ export default {
     const toForgot = () => {
       emit('changeStatus', useLogin().FORGOT)
     }
+
     return {
       state,
+      isReady,
       handleLogin,
       toRegister,
       toForgot
@@ -100,15 +99,14 @@ export default {
   color: #191919;
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 28px;
+  margin-bottom: 36px;
 }
 
 .login-bottom {
-  margin-top: 16px;
   display: flex;
   justify-content: space-between;
   color: #1476ff;
-  margin-bottom: 32px;
+  font-size: 14px;
   div {
     cursor: pointer;
   }
@@ -146,12 +144,5 @@ export default {
     height: 26px;
     cursor: pointer;
   }
-}
-:deep(.tiny-form-item__content) {
-  margin-left: 0 !important;
-}
-:deep(.tiny-button.tiny-button.tiny-button.tiny-button) {
-  width: 100%;
-  background: #595959;
 }
 </style>
