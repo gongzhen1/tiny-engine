@@ -11,13 +11,55 @@ export default defineConfig((configEnv) => {
     envDir: './env',
     registryPath: './registry.js'
   })
-
+  baseConfig.server = baseConfig.server || {}
+  baseConfig.server.proxy = {}
   const customConfig = {
     envDir: './env',
     publicDir: path.resolve(__dirname, './public'),
     server: {
-      port: 8090
-    }
+      host: "0.0.0.0",
+      port: 8098,
+      proxy: {
+        '/app-center/api/chat/completions': {
+          target: 'http://192.168.80.130:5090',
+          changeOrigin: true,
+          rewrite: path => path.replace('/app-center/api/chat/completions', '/api/chat/completions')
+        },
+        '/app-center/api/ai/chat': {
+          target: 'https://api.deepseek.com',
+          changeOrigin: true,
+          rewrite: path => path.replace('/app-center/api/ai/chat', '/chat/completions')
+        },
+        '/app-center/api': {
+          target: 'http://192.168.80.130:5090',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/app-center\/api/, '/api/appcenter')
+        },
+        '/app-center/v1/api': {
+          target: 'http://192.168.80.130:5090',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/app-center\/v1\/api/, '/api/appcenter')
+        },
+        '/platform-center/api': {
+          target: 'http://192.168.80.130:5090',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/platform-center\/api/, '/api/appcenter')
+        },
+        '/material-center/api': {
+          target: 'http://192.168.80.130:5090',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/material-center\/api/, '/api/materialcenter/api')
+        },
+        '/material/api': {
+          target: 'http://192.168.80.130:5090',
+          changeOrigin: true
+        },
+        '/api': {
+          target: 'http://192.168.80.130:5090',
+          changeOrigin: true
+        }
+      }
+    },
   }
 
   return mergeConfig(baseConfig, customConfig)
