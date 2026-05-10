@@ -1,5 +1,5 @@
 {
-  "name": "designer-demo",
+  "name": "lowcode-studio",
   "private": true,
   "version": "2.10.0",
   "type": "module",
@@ -12,8 +12,9 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@opentiny/tiny-engine": "workspace:^",
-    "@opentiny/tiny-engine-meta-register": "workspace:^",
+    "@opentiny/tiny-engine": "workspace:*",
+    "@opentiny/tiny-engine-meta-register": "workspace:*",
+    "@11kit/tiny-engine-runtime-renderer": "workspace:*",
     "@opentiny/tiny-engine-utils": "workspace:*",
     "@opentiny/vue": "~3.20.0",
     "@opentiny/vue-design-smb": "~3.20.0",
@@ -22,14 +23,20 @@
     "@opentiny/vue-renderless": "~3.20.0",
     "@opentiny/vue-theme": "~3.20.0",
     "@vueuse/core": "^9.6.0",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-i18n": "^9.9.0"
   },
   "devDependencies": {
-    "@opentiny/tiny-engine-mock": "workspace:^",
-    "@opentiny/tiny-engine-vite-config": "workspace:^",
+    "@opentiny/tiny-engine-mock": "workspace:*",
+    "@opentiny/tiny-engine-vite-config": "workspace:*",
     "@vitejs/plugin-vue": "^5.1.2",
     "cross-env": "^7.0.3",
     "vite": "^5.4.2",
     "vitest": "3.0.9"
+  },
+  "pnpm": {
+    "overrides": {
+      "@opentiny/tiny-engine-plugin-robot": "@11kit/tiny-engine-plugin-robot@2.10.2"
+    }
   }
 }

@@ -64,7 +64,7 @@ jobs:
       - name: add environment variable
         run: |
           VITE_ORIGIN_URL="https://agent.opentiny.design/"
-          cat <<EOF >> designer-demo/env/.env.alpha
+          cat <<EOF >> lowcode-studio/env/.env.alpha
           # ---- appended by CI (deploy-cdn) ----
           VITE_ORIGIN=$VITE_ORIGIN_URL
           EOF
@@ -74,7 +74,7 @@ jobs:
         name: Prepare version-timestamp
         run: |
           # Extract version from package.json
-          VERSION=$(node -p "require('./designer-demo/package.json').version")
+          VERSION=$(node -p "require('./lowcode-studio/package.json').version")
 
           # Generate timestamp in YYYYMMDD-HHMMSS format
           TIMESTAMP=$(TZ="Asia/Shanghai" date +%Y%m%d-%H%M%S)
@@ -114,8 +114,8 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: designer-demo-dist
-          path: ./designer-demo/dist/
+          name: lowcode-studio-dist
+          path: ./lowcode-studio/dist/
           retention-days: 1
 
   deploy-cdn:
@@ -128,8 +128,8 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: designer-demo-dist
-          path: ./designer-demo/dist/
+          name: lowcode-studio-dist
+          path: ./lowcode-studio/dist/
 
       - name: Install obsutil
         run: |
@@ -144,16 +144,16 @@ jobs:
                          -k=${{ secrets.HUAWEI_CLOUD_SK }} \
                          -e=${{ secrets.HUAWEI_CLOUD_ENDPOINT }}
           # Upload to versioned path
-          obsutil cp ./designer-demo/dist \
+          obsutil cp ./lowcode-studio/dist \
                     obs://${{ secrets.HUAWEI_CLOUD_BUCKET }}/${{ needs.build.outputs.obs-path }} \
                     -r -f -flat
 
           # If is_latest_release is true, also upload to latest path
           if [ "${{ github.event.inputs.is_latest_release }}" = "true" ]; then
-            # use cdn-base-latest replace cdn-base in all ./designer-demo/dist files
-            find ./designer-demo/dist -type f \( -name "*.html" -o -name "*.js" -o -name "*.mjs" -o -name "*.css" \) \
+            # use cdn-base-latest replace cdn-base in all ./lowcode-studio/dist files
+            find ./lowcode-studio/dist -type f \( -name "*.html" -o -name "*.js" -o -name "*.mjs" -o -name "*.css" \) \
               -exec sed -i "s|${{ needs.build.outputs.cdn-base }}|${{ needs.build.outputs.cdn-base-latest }}|g" {} +
-            obsutil cp ./designer-demo/dist \
+            obsutil cp ./lowcode-studio/dist \
                       obs://${{ secrets.HUAWEI_CLOUD_BUCKET }}/${{ needs.build.outputs.obs-path-latest }} \
                       -r -f -flat
           fi

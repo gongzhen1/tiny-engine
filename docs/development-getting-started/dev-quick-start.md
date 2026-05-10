@@ -119,7 +119,7 @@ export default {
 
 ```
 ...
-├─ designer-demo # 此处为高度可定制化的低代码平台，即用户自己的低代码设计器     
+├─ lowcode-studio # 此处为高度可定制化的低代码平台，即用户自己的低代码设计器     
 │  ├─ env
 │  ├─ public 
 │  ├─ src

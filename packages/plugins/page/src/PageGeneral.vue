@@ -81,7 +81,7 @@ import { ref, computed, watchEffect, reactive } from 'vue'
 import { Form, FormItem, Input, Select, Radio } from '@opentiny/vue'
 import { iconFile } from '@opentiny/vue-icon'
 import { usePage } from '@opentiny/tiny-engine-meta-register'
-import { REGEXP_PAGE_NAME, REGEXP_FOLDER_NAME, REGEXP_ROUTE } from '@opentiny/tiny-engine-common/js/verification'
+import { REGEXP_FOLDER_NAME, REGEXP_ROUTE } from '@opentiny/tiny-engine-common/js/verification'
 
 export default {
   components: {
@@ -173,10 +173,6 @@ export default {
     const pageRules = {
       name: [
         { required: true, message: '请输入页面 ID' },
-        {
-          pattern: REGEXP_PAGE_NAME,
-          message: '只允许包含英文字母，且为大写开头驼峰格式, 如DemoPage'
-        },
         {
           min: 3,
           max: 25,

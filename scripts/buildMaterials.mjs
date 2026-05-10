@@ -9,7 +9,7 @@ const logger = new Logger('buildMaterials')
 // 物料文件存放文件夹名称
 const materialsDir = 'materials'
 // 物料资产包
-const bundlePath = path.join(process.cwd(), '/designer-demo/public/mock/bundle.json')
+const bundlePath = path.join(process.cwd(), '/lowcode-studio/public/mock/bundle.json')
 // mockServer应用数据
 const appInfoPath = path.join(process.cwd(), '/mockServer/src/assets/json/appinfo.json')
 const appSchemaPath = path.join(process.cwd(), 'mockServer/src/mock/get/app-center/v1/apps/schema/1.json')

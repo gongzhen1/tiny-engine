@@ -61,7 +61,7 @@ cat ./*.sql > complete.sql
 
 #### 1.3 修改数据库等相关的配置项
 
-在 `tiny-engine-backend-java/app/src/main/resources/application-dev.yml` 文件中设置自己的端口号 `port`（和前端 `tiny-engine/designer-demo/env/.env.development` 文件中的 `VITE_ORIGIN` 变量中的端口号保持一致）、还有数据库连接信息（用户名 `username`、密码 `password`、`URL`）
+在 `tiny-engine-backend-java/app/src/main/resources/application-dev.yml` 文件中设置自己的端口号 `port`（和前端 `tiny-engine/lowcode-studio/env/.env.development` 文件中的 `VITE_ORIGIN` 变量中的端口号保持一致）、还有数据库连接信息（用户名 `username`、密码 `password`、`URL`）
 
 ![](./imgs/java-debugging-image39.png)
 
@@ -98,7 +98,7 @@ Swagger 访问链接路径：
 
 - 修改文件配置
 
-修改 `tiny-engine/designer-demo/env/.env.development`中的 `VITE_ORIGIN` 变量为自己本地的服务端地址端口：
+修改 `tiny-engine/lowcode-studio/env/.env.development`中的 `VITE_ORIGIN` 变量为自己本地的服务端地址端口：
 
 ![](./imgs/java-debugging-image33.png)
 

@@ -46,7 +46,7 @@ jobs:
           if [ "$ENV" = "production" ]; then
             VITE_ORIGIN_URL="https://agent.opentiny.design/"
           fi
-          cat <<EOF >> designer-demo/env/.env.alpha
+          cat <<EOF >> lowcode-studio/env/.env.alpha
           # ---- appended by CI (gh-pages) ----
           VITE_ORIGIN=$VITE_ORIGIN_URL
           EOF
@@ -62,7 +62,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./designer-demo/dist/
+          publish_dir: ./lowcode-studio/dist/
           keep_files: true
           force_orphan: false
           user_name: 'github-actions[bot]'

@@ -10352,6 +10352,372 @@
           "id": 1,
           "version": "2.4.2",
           "name": {
+            "zh_CN": "选择器"
+          },
+          "component": "ElSelect",
+          "icon": "select",
+          "description": "用于从多个选项中进行选择，支持单选和多选",
+          "docUrl": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "devMode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElSelect",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": [
+                "ElOption"
+              ],
+              "parentWhitelist": [
+                "ElForm",
+                "ElFormItem"
+              ],
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "placeholder",
+                "clearable",
+                "multiple",
+                "disabled",
+                "options"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "placeholder",
+                    "label": {
+                      "text": {
+                        "zh_CN": "占位文本"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "占位文本"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "请选择",
+                    "widget": {
+                      "component": "I18nConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "clearable",
+                    "label": {
+                      "text": {
+                        "zh_CN": "可清除"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否可清除"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "multiple",
+                    "label": {
+                      "text": {
+                        "zh_CN": "多选"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否多选模式"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  }
+                ],
+                "description": {
+                  "zh_CN": ""
+                }
+              },
+              {
+                "name": "1",
+                "label": {
+                  "zh_CN": "选项配置"
+                },
+                "content": [
+                  {
+                    "property": "options",
+                    "label": {
+                      "text": {
+                        "zh_CN": "选项列表"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "可选项数据源，每项可以是 {id,label} 或 {value,label} 格式"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "top",
+                    "type": "array",
+                    "defaultValue": [
+                      {
+                        "id": "1",
+                        "label": "选项一"
+                      },
+                      {
+                        "id": "2",
+                        "label": "选项二"
+                      },
+                      {
+                        "id": "3",
+                        "label": "选项三"
+                      }
+                    ],
+                    "widget": {
+                      "component": "CodeConfigurator",
+                      "props": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  {
+                    "property": "props",
+                    "label": {
+                      "text": {
+                        "zh_CN": "选项字段映射"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "配置 options 中每个选项的 value/label/disabled 字段名映射，如 {value:'id',label:'name'}"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "top",
+                    "type": "object",
+                    "defaultValue": {
+                      "value": "id",
+                      "label": "label",
+                      "disabled": "disabled"
+                    },
+                    "widget": {
+                      "component": "CodeConfigurator",
+                      "props": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                ],
+                "description": {
+                  "zh_CN": ""
+                }
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "label": {
+                  "zh_CN": "双向绑定值改变时触发"
+                },
+                "description": {
+                  "zh_CN": "双向绑定值改变时触发"
+                }
+              },
+              "onChange": {
+                "label": {
+                  "zh_CN": "选中值变化"
+                },
+                "description": {
+                  "zh_CN": "选中值变化时触发"
+                },
+                "type": "event",
+                "functionInfo": {
+                  "params": [
+                    {
+                      "name": "value",
+                      "type": "string | number | array",
+                      "defaultValue": "",
+                      "description": {
+                        "zh_CN": "当前选中的值"
+                      }
+                    }
+                  ],
+                  "returns": {}
+                },
+                "defaultValue": ""
+              },
+              "onBlur": {
+                "label": {
+                  "zh_CN": "在组件失去焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "在组件 Input 失去焦点时触发"
+                },
+                "type": "event",
+                "defaultValue": ""
+              },
+              "onFocus": {
+                "label": {
+                  "zh_CN": "在组件获得焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "在组件 Input 获得焦点时触发"
+                },
+                "type": "event",
+                "defaultValue": ""
+              },
+              "onClear": {
+                "label": {
+                  "zh_CN": "点击清空按钮时触发"
+                },
+                "description": {
+                  "zh_CN": "点击清空按钮时触发"
+                },
+                "type": "event",
+                "defaultValue": ""
+              },
+              "onRemoveTag": {
+                "label": {
+                  "zh_CN": "多选时移除tag时触发"
+                },
+                "description": {
+                  "zh_CN": "多选模式下移除tag时触发"
+                },
+                "type": "event",
+                "functionInfo": {
+                  "params": [
+                    {
+                      "name": "value",
+                      "type": "string | number",
+                      "defaultValue": "",
+                      "description": {
+                        "zh_CN": "被移除的值"
+                      }
+                    }
+                  ],
+                  "returns": {}
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {
+              "empty": {
+                "label": {
+                  "zh_CN": "无选项内容"
+                },
+                "description": {
+                  "zh_CN": "无选项时显示的内容"
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
             "zh_CN": "按钮"
           },
           "component": "ElButton",
@@ -25852,6 +26218,3169 @@
               ]
             }
           }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "级联选择器"
+          },
+          "component": "ElCascader",
+          "icon": "cascader",
+          "description": "级联选择器",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElCascader",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "options",
+                "props",
+                "placeholder",
+                "clearable",
+                "disabled"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "选中项绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "placeholder",
+                    "label": {
+                      "text": {
+                        "zh_CN": "占位文本"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "占位文本"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "clearable",
+                    "label": {
+                      "text": {
+                        "zh_CN": "可清空"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否支持清空选项"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "options",
+                    "label": {
+                      "text": {
+                        "zh_CN": "选项配置"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "选项的数据源"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "CodeConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "props",
+                    "label": {
+                      "text": {
+                        "zh_CN": "属性配置"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "配置选项"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "CodeConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当选中节点变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当选中节点变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onExpandChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当展开节点发生变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当展开节点发生变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onBlur": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "defaultValue": ""
+              },
+              "onFocus": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "defaultValue": ""
+              },
+              "onClear": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当点击清除按钮时触发"
+                },
+                "description": {
+                  "zh_CN": "当点击清除按钮时触发"
+                },
+                "defaultValue": ""
+              },
+              "onVisibleChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当下拉框出现/隐藏时触发"
+                },
+                "description": {
+                  "zh_CN": "当下拉框出现/隐藏时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "多选框组"
+          },
+          "component": "ElCheckboxGroup",
+          "icon": "checkbox",
+          "description": "多选框组",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElCheckboxGroup",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "options",
+                "disabled",
+                "size"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "size",
+                    "label": {
+                      "text": {
+                        "zh_CN": "尺寸"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "多选框组尺寸"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "allowClear": true,
+                        "options": [
+                          {
+                            "label": "large",
+                            "value": "large"
+                          },
+                          {
+                            "label": "default",
+                            "value": "default"
+                          },
+                          {
+                            "label": "small",
+                            "value": "small"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "options",
+                    "label": {
+                      "text": {
+                        "zh_CN": "选项配置"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "选项的数据源"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "CodeConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "min",
+                    "label": {
+                      "text": {
+                        "zh_CN": "最小数量"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "可被勾选的checkbox的最小数量"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "max",
+                    "label": {
+                      "text": {
+                        "zh_CN": "最大数量"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "可被勾选的checkbox的最大数量"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当绑定值变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当绑定值变化时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "单选框组"
+          },
+          "component": "ElRadioGroup",
+          "icon": "radio",
+          "description": "单选框组",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElRadioGroup",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "options",
+                "disabled",
+                "size"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "size",
+                    "label": {
+                      "text": {
+                        "zh_CN": "尺寸"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "单选框尺寸"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "allowClear": true,
+                        "options": [
+                          {
+                            "label": "large",
+                            "value": "large"
+                          },
+                          {
+                            "label": "default",
+                            "value": "default"
+                          },
+                          {
+                            "label": "small",
+                            "value": "small"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "options",
+                    "label": {
+                      "text": {
+                        "zh_CN": "选项配置"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "选项的数据源"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "CodeConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当绑定值变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当绑定值变化时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "开关"
+          },
+          "component": "ElSwitch",
+          "icon": "switch",
+          "description": "开关",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElSwitch",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "disabled",
+                "loading",
+                "size",
+                "activeText",
+                "inactiveText"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "loading",
+                    "label": {
+                      "text": {
+                        "zh_CN": "加载中"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否显示加载中"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "size",
+                    "label": {
+                      "text": {
+                        "zh_CN": "尺寸"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "switch的尺寸"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "allowClear": true,
+                        "options": [
+                          {
+                            "label": "large",
+                            "value": "large"
+                          },
+                          {
+                            "label": "default",
+                            "value": "default"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "property": "activeText",
+                    "label": {
+                      "text": {
+                        "zh_CN": "打开时的文字"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "switch打开时的文字描述"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "inactiveText",
+                    "label": {
+                      "text": {
+                        "zh_CN": "关闭时的文字"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "switch关闭时的文字描述"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "activeValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "打开时的值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "switch状态为on时的值"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": true,
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "inactiveValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "关闭时的值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "switch状态为off时的值"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当状态发生变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当状态发生变化时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "滑块"
+          },
+          "component": "ElSlider",
+          "icon": "slider",
+          "description": "滑块",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElSlider",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "disabled",
+                "size",
+                "min",
+                "max",
+                "step",
+                "showInput"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "min",
+                    "label": {
+                      "text": {
+                        "zh_CN": "最小值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "最小值"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "defaultValue": 0,
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "max",
+                    "label": {
+                      "text": {
+                        "zh_CN": "最大值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "最大值"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "defaultValue": 100,
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "step",
+                    "label": {
+                      "text": {
+                        "zh_CN": "步长"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "步长"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "defaultValue": 1,
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "showInput",
+                    "label": {
+                      "text": {
+                        "zh_CN": "显示输入框"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否显示输入框"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "range",
+                    "label": {
+                      "text": {
+                        "zh_CN": "范围选择"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否为范围选择"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onInput": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当输入值时触发"
+                },
+                "description": {
+                  "zh_CN": "当输入值时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "时间选择器"
+          },
+          "component": "ElTimePicker",
+          "icon": "el-timepicker-icon",
+          "description": "时间选择器",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElTimePicker",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "placeholder",
+                "clearable",
+                "disabled",
+                "size",
+                "format"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "placeholder",
+                    "label": {
+                      "text": {
+                        "zh_CN": "占位文本"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "占位文本"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "clearable",
+                    "label": {
+                      "text": {
+                        "zh_CN": "可清空"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否显示清除按钮"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": true,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "size",
+                    "label": {
+                      "text": {
+                        "zh_CN": "尺寸"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "输入框尺寸"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "allowClear": true,
+                        "options": [
+                          {
+                            "label": "large",
+                            "value": "large"
+                          },
+                          {
+                            "label": "default",
+                            "value": "default"
+                          },
+                          {
+                            "label": "small",
+                            "value": "small"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "property": "format",
+                    "label": {
+                      "text": {
+                        "zh_CN": "格式"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "显示在输入框中的格式"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "HH:mm:ss",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onBlur": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "defaultValue": ""
+              },
+              "onFocus": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "时间选择"
+          },
+          "component": "ElTimeSelect",
+          "icon": "el-timeselect",
+          "description": "时间选择",
+          "doc_url": "",
+          "screenshot": "el-timepicker",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElTimeSelect",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "placeholder",
+                "clearable",
+                "disabled",
+                "size"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "placeholder",
+                    "label": {
+                      "text": {
+                        "zh_CN": "占位文本"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "占位文本"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "clearable",
+                    "label": {
+                      "text": {
+                        "zh_CN": "可清空"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否显示清除按钮"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": true,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "自动补全输入框"
+          },
+          "component": "ElAutocomplete",
+          "icon": "input",
+          "description": "自动补全输入框",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElAutocomplete",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "placeholder",
+                "disabled",
+                "clearable"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "placeholder",
+                    "label": {
+                      "text": {
+                        "zh_CN": "占位文本"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "占位文本"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "defaultValue": "",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "clearable",
+                    "label": {
+                      "text": {
+                        "zh_CN": "可清空"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否显示清除按钮"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": true,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onInput": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当输入值时触发"
+                },
+                "description": {
+                  "zh_CN": "当输入值时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onFocus": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "defaultValue": ""
+              },
+              "onBlur": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "defaultValue": ""
+              },
+              "onSelect": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当选中某一项时触发"
+                },
+                "description": {
+                  "zh_CN": "当选中某一项时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1,
+          "version": "2.4.2",
+          "name": {
+            "zh_CN": "数字输入框"
+          },
+          "component": "ElInputNumber",
+          "icon": "el-number-input",
+          "description": "数字输入框",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "element-plus",
+            "exportName": "ElInputNumber",
+            "destructuring": true
+          },
+          "group": "表单组件",
+          "category": "element-plus",
+          "configure": {
+            "loop": true,
+            "condition": true,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue",
+                "min",
+                "max",
+                "step",
+                "disabled",
+                "size",
+                "precision"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent",
+                "createBlock"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "绑定值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定值"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "min",
+                    "label": {
+                      "text": {
+                        "zh_CN": "最小值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "最小值"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "max",
+                    "label": {
+                      "text": {
+                        "zh_CN": "最大值"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "最大值"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "step",
+                    "label": {
+                      "text": {
+                        "zh_CN": "步长"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "步长"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "defaultValue": 1,
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "disabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "禁用"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否禁用"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": false,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "size",
+                    "label": {
+                      "text": {
+                        "zh_CN": "尺寸"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "输入框尺寸"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "allowClear": true,
+                        "options": [
+                          {
+                            "label": "large",
+                            "value": "large"
+                          },
+                          {
+                            "label": "default",
+                            "value": "default"
+                          },
+                          {
+                            "label": "small",
+                            "value": "small"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "property": "precision",
+                    "label": {
+                      "text": {
+                        "zh_CN": "精度"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "数值精度"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    }
+                  },
+                  {
+                    "property": "controls",
+                    "label": {
+                      "text": {
+                        "zh_CN": "显示增减按钮"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否显示增减按钮"
+                    },
+                    "required": true,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "defaultValue": true,
+                    "widget": {
+                      "component": "CheckBoxConfigurator",
+                      "props": {}
+                    }
+                  }
+                ]
+              }
+            ],
+            "events": {
+              "onUpdate:modelValue": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "绑定值变化"
+                },
+                "description": {
+                  "zh_CN": "绑定值变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onChange": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "description": {
+                  "zh_CN": "当值发生变化时触发"
+                },
+                "defaultValue": ""
+              },
+              "onFocus": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当获得焦点时触发"
+                },
+                "defaultValue": ""
+              },
+              "onBlur": {
+                "type": "event",
+                "label": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "description": {
+                  "zh_CN": "当失去焦点时触发"
+                },
+                "defaultValue": ""
+              }
+            },
+            "slots": {},
+            "states": []
+          }
+        },
+        {
+          "id": 1777641247912,
+          "version": "0.0.1",
+          "name": {
+            "zh_CN": "代码编辑器"
+          },
+          "component": "TeCodeEditor",
+          "icon": "te-code-editor",
+          "description": "基于 Monaco Editor 的代码编辑组件，支持语法高亮、缩略地图、主题切换",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "tinyengine-material",
+            "exportName": "TeCodeEditor",
+            "destructuring": true
+          },
+          "group": "拓展组件",
+          "category": "代码编辑",
+          "priority": 1,
+          "configure": {
+            "loop": false,
+            "condition": false,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "language",
+                "theme"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "代码内容"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定的代码内容"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "TextAreaConfigurator",
+                      "props": {
+                        "rows": 6
+                      }
+                    },
+                    "defaultValue": ""
+                  },
+                  {
+                    "property": "language",
+                    "label": {
+                      "text": {
+                        "zh_CN": "语言类型"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "代码语言类型"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "enum",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "options": [
+                          {
+                            "label": "JavaScript",
+                            "value": "javascript"
+                          },
+                          {
+                            "label": "TypeScript",
+                            "value": "typescript"
+                          },
+                          {
+                            "label": "Java",
+                            "value": "java"
+                          },
+                          {
+                            "label": "Python",
+                            "value": "python"
+                          },
+                          {
+                            "label": "Go",
+                            "value": "go"
+                          },
+                          {
+                            "label": "SQL",
+                            "value": "sql"
+                          },
+                          {
+                            "label": "HTML",
+                            "value": "html"
+                          },
+                          {
+                            "label": "CSS",
+                            "value": "css"
+                          },
+                          {
+                            "label": "JSON",
+                            "value": "json"
+                          }
+                        ]
+                      }
+                    },
+                    "defaultValue": "javascript"
+                  },
+                  {
+                    "property": "theme",
+                    "label": {
+                      "text": {
+                        "zh_CN": "编辑器主题"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "Monaco Editor 主题"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "enum",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "options": [
+                          {
+                            "label": "Dark",
+                            "value": "vs-dark"
+                          },
+                          {
+                            "label": "Light",
+                            "value": "vs"
+                          },
+                          {
+                            "label": "High Contrast Black",
+                            "value": "hc-black"
+                          },
+                          {
+                            "label": "High Contrast Light",
+                            "value": "hc-light"
+                          }
+                        ]
+                      }
+                    },
+                    "defaultValue": "vs-dark"
+                  },
+                  {
+                    "property": "readOnly",
+                    "label": {
+                      "text": {
+                        "zh_CN": "只读模式"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否只读"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "widget": {
+                      "component": "SwitchConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": false
+                  },
+                  {
+                    "property": "minimap",
+                    "label": {
+                      "text": {
+                        "zh_CN": "缩略地图"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否显示右侧缩略地图"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "widget": {
+                      "component": "SwitchConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": true
+                  },
+                  {
+                    "property": "fontSize",
+                    "label": {
+                      "text": {
+                        "zh_CN": "字体大小"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "编辑器字体大小"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "number",
+                    "widget": {
+                      "component": "NumberConfigurator",
+                      "props": {
+                        "step": 1,
+                        "min": 10,
+                        "max": 30
+                      }
+                    },
+                    "defaultValue": 14
+                  },
+                  {
+                    "property": "width",
+                    "label": {
+                      "text": {
+                        "zh_CN": "宽度"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "编辑器宽度"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": "100%"
+                  },
+                  {
+                    "property": "height",
+                    "label": {
+                      "text": {
+                        "zh_CN": "高度"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "编辑器高度"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": "400px"
+                  }
+                ],
+                "description": {
+                  "zh_CN": "组件核心功能相关的配置"
+                }
+              }
+            ],
+            "events": {
+              "description": {
+                "zh_CN": "事件"
+              },
+              "content": [
+                {
+                  "name": "change",
+                  "label": {
+                    "zh_CN": "代码变化"
+                  },
+                  "description": {
+                    "zh_CN": "代码内容变化时触发"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 1777641247913,
+          "version": "0.0.1",
+          "name": {
+            "zh_CN": "富文本编辑器"
+          },
+          "component": "TeAiEditor",
+          "icon": "te-ai-editor",
+          "description": "基于 AiEditor 的富文本编辑器，支持图片、视频、附件上传及 AI 辅助写作",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "tinyengine-material",
+            "exportName": "TeAiEditor",
+            "destructuring": true
+          },
+          "group": "拓展组件",
+          "category": "富文本编辑",
+          "priority": 1,
+          "configure": {
+            "loop": false,
+            "condition": false,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "placeholder",
+                "height",
+                "theme"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "HTML 内容"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定的富文本 HTML 内容"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "TextAreaConfigurator",
+                      "props": {
+                        "rows": 6
+                      }
+                    },
+                    "defaultValue": ""
+                  },
+                  {
+                    "property": "placeholder",
+                    "label": {
+                      "text": {
+                        "zh_CN": "占位文本"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "编辑器占位提示文字"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": "请输入内容..."
+                  },
+                  {
+                    "property": "height",
+                    "label": {
+                      "text": {
+                        "zh_CN": "高度"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "编辑器高度"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": "500px"
+                  },
+                  {
+                    "property": "theme",
+                    "label": {
+                      "text": {
+                        "zh_CN": "主题"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "编辑器主题样式"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "enum",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "options": [
+                          {
+                            "label": "浅色",
+                            "value": "light"
+                          },
+                          {
+                            "label": "深色",
+                            "value": "dark"
+                          }
+                        ]
+                      }
+                    },
+                    "defaultValue": "light"
+                  },
+                  {
+                    "property": "editable",
+                    "label": {
+                      "text": {
+                        "zh_CN": "可编辑"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否允许编辑"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "widget": {
+                      "component": "SwitchConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": true
+                  },
+                  {
+                    "property": "contentRetention",
+                    "label": {
+                      "text": {
+                        "zh_CN": "自动保存"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否自动保存到 localStorage"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "widget": {
+                      "component": "SwitchConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": false
+                  },
+                  {
+                    "property": "contentRetentionKey",
+                    "label": {
+                      "text": {
+                        "zh_CN": "存储 Key"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "localStorage 存储键名"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": ""
+                  }
+                ],
+                "description": {
+                  "zh_CN": "组件核心功能相关的配置"
+                }
+              },
+              {
+                "name": "2",
+                "label": {
+                  "zh_CN": "AI 大模型配置"
+                },
+                "content": [
+                  {
+                    "property": "aiEnabled",
+                    "label": {
+                      "text": {
+                        "zh_CN": "启用 AI"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "是否启用 AI 辅助写作功能"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "widget": {
+                      "component": "SwitchConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": false
+                  },
+                  {
+                    "property": "aiEndpoint",
+                    "label": {
+                      "text": {
+                        "zh_CN": "API 地址"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "大模型 API 端点地址"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": ""
+                  },
+                  {
+                    "property": "aiKey",
+                    "label": {
+                      "text": {
+                        "zh_CN": "API Key"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "大模型 API 密钥"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": ""
+                  },
+                  {
+                    "property": "aiModel",
+                    "label": {
+                      "text": {
+                        "zh_CN": "模型名称"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "大模型名称，如 gpt-4o、deepseek-chat"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "InputConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": "gpt-4o"
+                  }
+                ],
+                "description": {
+                  "zh_CN": "AI 大模型相关配置，启用后可选中文字使用 AI 润色、续写、翻译等功能"
+                }
+              }
+            ],
+            "events": {
+              "description": {
+                "zh_CN": "事件"
+              },
+              "content": [
+                {
+                  "name": "change",
+                  "label": {
+                    "zh_CN": "内容变化"
+                  },
+                  "description": {
+                    "zh_CN": "编辑器内容变化时触发"
+                  }
+                },
+                {
+                  "name": "focus",
+                  "label": {
+                    "zh_CN": "获得焦点"
+                  },
+                  "description": {
+                    "zh_CN": "编辑器获得焦点时触发"
+                  }
+                },
+                {
+                  "name": "blur",
+                  "label": {
+                    "zh_CN": "失去焦点"
+                  },
+                  "description": {
+                    "zh_CN": "编辑器失去焦点时触发"
+                  }
+                },
+                {
+                  "name": "created",
+                  "label": {
+                    "zh_CN": "创建完成"
+                  },
+                  "description": {
+                    "zh_CN": "编辑器实例创建完成时触发"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": 1777641247914,
+          "version": "0.0.1",
+          "name": {
+            "zh_CN": "Markdown 渲染"
+          },
+          "component": "TeMarkdown",
+          "icon": "te-markdown",
+          "description": "基于 marked 的 Markdown 渲染组件，将 Markdown 文本渲染为 HTML",
+          "doc_url": "",
+          "screenshot": "",
+          "tags": "",
+          "keywords": "",
+          "dev_mode": "proCode",
+          "npm": {
+            "package": "tinyengine-material",
+            "exportName": "TeMarkdown",
+            "destructuring": true
+          },
+          "group": "拓展组件",
+          "category": "文本渲染",
+          "priority": 1,
+          "configure": {
+            "loop": false,
+            "condition": false,
+            "styles": true,
+            "isContainer": false,
+            "isModal": false,
+            "isPopper": false,
+            "nestingRule": {
+              "childWhitelist": "",
+              "parentWhitelist": "",
+              "descendantBlacklist": "",
+              "ancestorWhitelist": ""
+            },
+            "isNullNode": false,
+            "isLayout": false,
+            "rootSelector": "",
+            "shortcuts": {
+              "properties": [
+                "modelValue"
+              ]
+            },
+            "contextMenu": {
+              "actions": [
+                "copy",
+                "remove",
+                "insert",
+                "updateAttr",
+                "bindEvent"
+              ],
+              "disable": []
+            },
+            "invalidity": [
+              ""
+            ],
+            "clickCapture": true,
+            "framework": "Vue"
+          },
+          "schema": {
+            "properties": [
+              {
+                "name": "0",
+                "label": {
+                  "zh_CN": "基础属性"
+                },
+                "content": [
+                  {
+                    "property": "modelValue",
+                    "label": {
+                      "text": {
+                        "zh_CN": "Markdown 内容"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "绑定的 Markdown 文本内容"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "string",
+                    "widget": {
+                      "component": "TextAreaConfigurator",
+                      "props": {
+                        "rows": 8
+                      }
+                    },
+                    "defaultValue": ""
+                  },
+                  {
+                    "property": "gfm",
+                    "label": {
+                      "text": {
+                        "zh_CN": "GFM 模式"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "启用 GitHub Flavored Markdown"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "widget": {
+                      "component": "SwitchConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": true
+                  },
+                  {
+                    "property": "breaks",
+                    "label": {
+                      "text": {
+                        "zh_CN": "换行转换"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "将单个换行转为 <br>"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "boolean",
+                    "widget": {
+                      "component": "SwitchConfigurator",
+                      "props": {}
+                    },
+                    "defaultValue": false
+                  },
+                  {
+                    "property": "codeTheme",
+                    "label": {
+                      "text": {
+                        "zh_CN": "代码主题"
+                      }
+                    },
+                    "description": {
+                      "zh_CN": "代码块高亮主题样式"
+                    },
+                    "required": false,
+                    "readOnly": false,
+                    "disabled": false,
+                    "cols": 12,
+                    "labelPosition": "left",
+                    "type": "enum",
+                    "widget": {
+                      "component": "SelectConfigurator",
+                      "props": {
+                        "options": [
+                          {
+                            "label": "暗色",
+                            "value": "dark"
+                          },
+                          {
+                            "label": "亮色",
+                            "value": "light"
+                          }
+                        ]
+                      }
+                    },
+                    "defaultValue": "dark"
+                  }
+                ],
+                "description": {
+                  "zh_CN": "组件核心功能相关的配置"
+                }
+              }
+            ],
+            "events": {
+              "description": {
+                "zh_CN": "事件"
+              },
+              "content": []
+            }
+          }
         }
       ],
       "blocks": [],
@@ -28244,6 +31773,41 @@
             },
             {
               "name": {
+                "zh_CN": "选择器"
+              },
+              "icon": "select",
+              "screenshot": "",
+              "snippetName": "ElSelect",
+              "schema": {
+                "componentName": "ElSelect",
+                "props": {
+                  "modelValue": "",
+                  "placeholder": "请选择",
+                  "clearable": true,
+                  "options": [
+                    {
+                      "id": "1",
+                      "label": "选项一"
+                    },
+                    {
+                      "id": "2",
+                      "label": "选项二"
+                    },
+                    {
+                      "id": "3",
+                      "label": "选项三"
+                    }
+                  ],
+                  "props": {
+                    "value": "id",
+                    "label": "label",
+                    "disabled": "disabled"
+                  }
+                }
+              }
+            },
+            {
+              "name": {
                 "zh_CN": "输入框"
               },
               "icon": "input",
@@ -28399,6 +31963,276 @@
                   ]
                 }
               }
+            },
+            {
+              "name": {
+                "zh_CN": "级联选择器"
+              },
+              "icon": "cascader",
+              "screenshot": "",
+              "snippetName": "ElCascader",
+              "schema": {
+                "componentName": "ElCascader",
+                "props": {
+                  "modelValue": "",
+                  "placeholder": "请选择",
+                  "clearable": true,
+                  "options": [
+                    {
+                      "value": "guangdong",
+                      "label": "广东",
+                      "children": [
+                        {
+                          "value": "guangzhou",
+                          "label": "广州"
+                        },
+                        {
+                          "value": "shenzhen",
+                          "label": "深圳"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "jiangsu",
+                      "label": "江苏",
+                      "children": [
+                        {
+                          "value": "nanjing",
+                          "label": "南京"
+                        },
+                        {
+                          "value": "suzhou",
+                          "label": "苏州"
+                        }
+                      ]
+                    }
+                  ],
+                  "props": {
+                    "value": "value",
+                    "label": "label",
+                    "children": "children"
+                  }
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "多选框组"
+              },
+              "icon": "checkbox",
+              "screenshot": "",
+              "snippetName": "ElCheckboxGroup",
+              "schema": {
+                "componentName": "ElCheckboxGroup",
+                "props": {
+                  "modelValue": [],
+                  "options": [
+                    {
+                      "value": "Option1",
+                      "label": "选项一",
+                      "disabled": false
+                    },
+                    {
+                      "value": "Option2",
+                      "label": "选项二",
+                      "disabled": false
+                    },
+                    {
+                      "value": "Option3",
+                      "label": "选项三",
+                      "disabled": true
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "单选框组"
+              },
+              "icon": "radio",
+              "screenshot": "",
+              "snippetName": "ElRadioGroup",
+              "schema": {
+                "componentName": "ElRadioGroup",
+                "props": {
+                  "modelValue": "",
+                  "options": [
+                    {
+                      "value": "Option1",
+                      "label": "选项一"
+                    },
+                    {
+                      "value": "Option2",
+                      "label": "选项二"
+                    },
+                    {
+                      "value": "Option3",
+                      "label": "选项三"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "开关"
+              },
+              "icon": "switch",
+              "screenshot": "",
+              "snippetName": "ElSwitch",
+              "schema": {
+                "componentName": "ElSwitch",
+                "props": {
+                  "modelValue": true,
+                  "activeText": "开启",
+                  "inactiveText": "关闭"
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "滑块"
+              },
+              "icon": "slider",
+              "screenshot": "",
+              "snippetName": "ElSlider",
+              "schema": {
+                "componentName": "ElSlider",
+                "props": {
+                  "modelValue": 0,
+                  "min": 0,
+                  "max": 100,
+                  "step": 1
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "时间选择器"
+              },
+              "icon": "el-timepicker",
+              "screenshot": "el-timepicker",
+              "snippetName": "ElTimePicker",
+              "schema": {
+                "componentName": "ElTimePicker",
+                "props": {
+                  "modelValue": "",
+                  "placeholder": "选择时间",
+                  "clearable": true
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "时间选择"
+              },
+              "icon": "el-timeselect",
+              "screenshot": "",
+              "snippetName": "ElTimeSelect",
+              "schema": {
+                "componentName": "ElTimeSelect",
+                "props": {
+                  "modelValue": "",
+                  "placeholder": "选择时间",
+                  "clearable": true
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "自动补全输入框"
+              },
+              "icon": "input",
+              "screenshot": "",
+              "snippetName": "ElAutocomplete",
+              "schema": {
+                "componentName": "ElAutocomplete",
+                "props": {
+                  "modelValue": "",
+                  "placeholder": "请输入内容",
+                  "clearable": true
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "数字输入框"
+              },
+              "icon": "el-number-input",
+              "screenshot": "",
+              "snippetName": "ElInputNumber",
+              "schema": {
+                "componentName": "ElInputNumber",
+                "props": {
+                  "modelValue": 0,
+                  "min": 0,
+                  "max": 100,
+                  "step": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "group": "tinyengine-material",
+          "label": {
+            "zh_CN": "拓展组件库"
+          },
+          "children": [
+            {
+              "name": {
+                "zh_CN": "代码编辑器"
+              },
+              "icon": "te-code-editor",
+              "screenshot": "",
+              "snippetName": "TeCodeEditor",
+              "schema": {
+                "componentName": "TeCodeEditor",
+                "props": {
+                  "modelValue": "",
+                  "language": "javascript",
+                  "theme": "vs-dark"
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "富文本编辑器"
+              },
+              "icon": "te-ai-editor",
+              "screenshot": "",
+              "snippetName": "TeAiEditor",
+              "schema": {
+                "componentName": "TeAiEditor",
+                "props": {
+                  "modelValue": "",
+                  "placeholder": "请输入内容...",
+                  "height": "500px",
+                  "theme": "light",
+                  "aiEnabled": false,
+                  "aiEndpoint": "",
+                  "aiKey": "",
+                  "aiModel": "gpt-4o"
+                }
+              }
+            },
+            {
+              "name": {
+                "zh_CN": "Markdown 渲染"
+              },
+              "icon": "te-markdown",
+              "screenshot": "",
+              "snippetName": "TeMarkdown",
+              "schema": {
+                "componentName": "TeMarkdown",
+                "props": {
+                  "modelValue": "",
+                  "gfm": true,
+                  "breaks": false,
+                  "codeTheme": "dark"
+                }
+              }
             }
           ]
         }
@@ -28422,10 +32256,18 @@
         {
           "name": "element-plus组件库",
           "package": "element-plus",
-          "version": "2.4.2",
+          "version": "2.10.5",
           "destructuring": true,
-          "script": "https://registry.npmmirror.com/element-plus/2.4.2/files/dist/index.full.mjs",
-          "css": "https://registry.npmmirror.com/element-plus/2.4.2/files/dist/index.css"
+          "script": "https://registry.npmmirror.com/element-plus/2.13.7/files/dist/index.full.mjs",
+          "css": "https://registry.npmmirror.com/element-plus/2.13.7/files/dist/index.css"
+        },
+        {
+          "name": "拓展组件库",
+          "package": "tinyengine-material",
+          "version": "0.0.1",
+          "destructuring": true,
+          "script": "https://cdn.jsdelivr.net/npm/@11kit/tinyengine-material@1.0.0/dist/tinyengine-material.js",
+          "css": "https://cdn.jsdelivr.net/npm/@11kit/tinyengine-material@1.0.0/dist/tinyengine-material.css"
         }
       ]
     }

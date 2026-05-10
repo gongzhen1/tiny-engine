@@ -10,4 +10,4 @@ RUN npm config set strict-ssl false \
     && pnpm build:prod
 
 FROM nginx:latest
-COPY --from=build /app/designer-demo/dist/ /usr/share/nginx/html/
+COPY --from=build /app/lowcode-studio/dist/ /usr/share/nginx/html/
