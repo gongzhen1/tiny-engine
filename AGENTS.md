@@ -13,7 +13,7 @@ This file is the canonical source of truth for repo-wide agent instructions.
 - Monorepo: pnpm workspaces + lerna (independent versioning)
 - Primary stack: Vue 3, Vite, JavaScript/TypeScript
 - Package manager: `pnpm` only for interactive work in this repo
-- Designer app: `designer-demo/`
+- Designer app: `lowcode-studio/`
 - Local mock backend: `mockServer/`
 
 ## Working Model
@@ -62,7 +62,7 @@ Run the smallest sufficient verification for the change surface, then expand if 
 3. Published library packages under `packages/**`:
    Run the package-local `test` script if one exists.
    Run `pnpm build:plugin` when build output or published package behavior may be affected.
-4. `designer-demo/**` or shared packages consumed by the demo:
+4. `lowcode-studio/**` or shared packages consumed by the demo:
    Run `pnpm build:alpha`.
 5. Cross-package build or release-facing changes:
    Run `pnpm build:plugin` and `pnpm build:alpha`.

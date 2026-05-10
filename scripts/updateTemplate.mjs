@@ -9,7 +9,7 @@ const logger = new Logger('updateTemplate')
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const templateSrcPath = path.resolve(__dirname, '../designer-demo')
+const templateSrcPath = path.resolve(__dirname, '../lowcode-studio')
 const templateDistPath = path.resolve(__dirname, '../packages/engine-cli/template/designer')
 
 const ignoreFolder = ['node_modules', 'dist', 'temp', 'tmp', 'vitest.config.js', 'tests', 'bundle-deps']
@@ -35,7 +35,7 @@ async function copyTemplate() {
     if (await fs.pathExists(templateDistPath)) {
       await fs.remove(templateDistPath)
     }
-    // 复制designer-demo
+    // 复制lowcode-studio
     await fs.copy(templateSrcPath, templateDistPath, { filter })
     await fs.remove(templateBackupPath)
   } catch (error) {

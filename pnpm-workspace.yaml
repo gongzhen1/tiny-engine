@@ -1,7 +1,7 @@
 packages:
   - packages/**
   - mockServer
-  - designer-demo
+  - lowcode-studio
   - '!packages/**/test/**'
   - '!packages/**/template/**'
 patchedDependencies:

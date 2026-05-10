@@ -99,6 +99,10 @@ export default defineComponent({
       await nextTick()
       setPageCss(data.css || '', cssScopeId)
       Object.assign(pageSchema, newSchema)
+      // 默认设置 fileName 为浏览器标题
+      if (pageSchema.fileName) {
+        document.title = pageSchema.fileName
+      }
     }
 
     // 监听 schema 变化

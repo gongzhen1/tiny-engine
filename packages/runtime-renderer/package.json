@@ -1,6 +1,6 @@
 {
-  "name": "@opentiny/tiny-engine-runtime-renderer",
-  "version": "1.0.0",
+  "name": "@11kit/tiny-engine-runtime-renderer",
+  "version": "1.0.4",
   "description": "TinyEngine Runtime Renderer Package",
   "type": "module",
   "main": "dist/index.js",
@@ -14,8 +14,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@opentiny/tiny-engine-builtin-component": "workspace:*",
-    "@opentiny/tiny-engine-i18n-host": "workspace:*",
+    "@opentiny/tiny-engine-builtin-component": "2.10.0",
+    "@opentiny/tiny-engine-i18n-host": "2.10.0",
     "@vue/babel-plugin-jsx": "^1.2.5",
     "@babel/core": "^7.18.13",
     "@vue/shared": "^3.3.4",

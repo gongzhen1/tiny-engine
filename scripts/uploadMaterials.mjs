@@ -13,7 +13,7 @@ const pathsDotenv = resolveApp('.env')
 dotenv.config({ path: `${pathsDotenv}.local` })
 const { backend_url } = process.env
 
-const bundlePath = path.join(process.cwd(), '/designer-demo/public/mock/bundle.json')
+const bundlePath = path.join(process.cwd(), '/lowcode-studio/public/mock/bundle.json')
 const bundle = fs.readJSONSync(bundlePath)
 const jsonBuffer = Buffer.from(JSON.stringify(bundle))
 const boundary = '----WebKitFormBoundary7MA4YWxkTrZu0gW'
