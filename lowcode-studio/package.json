@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "cross-env vite",
     "dev:withAuth": "cross-env VITE_AUTH=true vite",
+    "build:prod": "cross-env NODE_OPTIONS=--max-old-space-size=10240 VITE_AUTH=false vite build --mode production",
     "build:alpha": "cross-env NODE_OPTIONS=--max-old-space-size=10240 vite build --mode alpha",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=10240 vite build",
     "test": "vitest run",
@@ -14,7 +15,7 @@
   "dependencies": {
     "@opentiny/tiny-engine": "workspace:*",
     "@opentiny/tiny-engine-meta-register": "workspace:*",
-    "@11kit/tiny-engine-runtime-renderer": "workspace:*",
+    "@opentiny/tiny-engine-runtime-renderer": "workspace:*",
     "@opentiny/tiny-engine-utils": "workspace:*",
     "@opentiny/vue": "~3.20.0",
     "@opentiny/vue-design-smb": "~3.20.0",
@@ -33,10 +34,5 @@
     "cross-env": "^7.0.3",
     "vite": "^5.4.2",
     "vitest": "3.0.9"
-  },
-  "pnpm": {
-    "overrides": {
-      "@opentiny/tiny-engine-plugin-robot": "@11kit/tiny-engine-plugin-robot@2.10.2"
-    }
   }
 }

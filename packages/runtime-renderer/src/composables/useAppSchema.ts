@@ -33,7 +33,7 @@ export function useAppSchema() {
     }
 
     try {
-      const response = await fetch('/mock/bundle.json')
+      const response = await fetch('/studio/materials/bundle.json')
 
       if (!response.ok) {
         throw new Error(`加载基础物料包失败: HTTP ${response.status}: ${response.statusText}`)

@@ -21,7 +21,7 @@ const logger = console
 const defaultOptions = {
   theme: 'light',
   platformId: 1,
-  material: ['/mock/bundle.json'],
+  material: ['/studio/materials/bundle.json'],
   scripts: [],
   styles: []
 }

@@ -158,8 +158,8 @@ export function useTinyEngineBaseConfig(engineConfig) {
     htmlUpgradeHttpsPlugin(mode),
     isCopyBundleDeps
       ? copyBundleDeps({
-          bundleFile: 'public/mock/bundle.json',
-          targetBundleFile: 'mock/bundle.json',
+          bundleFile: 'public/materials/bundle.json',
+          targetBundleFile: 'material/bundle.json',
           originCdnPrefix: VITE_CDN_DOMAIN, // mock 中bundle的域名当前和环境的VITE_CDN_DOMAIN一致
           base: getBaseUrlFromCli(config.base)
         }).plugin(command === 'serve')

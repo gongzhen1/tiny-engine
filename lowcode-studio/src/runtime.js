@@ -9,7 +9,7 @@
  * A PARTICULAR PURPOSE. SEE THE APPLICABLE LICENSES FOR MORE DETAILS.
  *
  */
-import { initRuntimeRenderer } from '@11kit/tiny-engine-runtime-renderer'
+import { initRuntimeRenderer } from '@opentiny/tiny-engine-runtime-renderer'
 import './runtime/styles/global.less'
 
 async function startApp() {
