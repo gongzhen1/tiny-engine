@@ -8,14 +8,21 @@ type ImportMapConfig = {
 }
 
 const DEFAULT_ENV = {
-  VITE_CDN_TYPE: 'npmmirror',
-  VITE_CDN_DOMAIN: 'https://registry.npmmirror.com',
+  VITE_CDN_TYPE: 'unpkg',
+  VITE_CDN_DOMAIN: 'https://unpkg.com',
   VITE_LOCAL_IMPORT_PATH: 'local-cdn-static',
   BASE_URL: '/',
   VITE_LOCAL_IMPORT_MAPS: 'false'
 }
 
 const getEnvValue = (key: keyof typeof DEFAULT_ENV) => {
+  // 优先使用 Vite 注入的环境变量
+  if (typeof import.meta !== 'undefined' && import.meta.env) {
+    const viteValue = import.meta.env[key]
+    if (viteValue !== undefined && viteValue !== '') {
+      return viteValue
+    }
+  }
   return DEFAULT_ENV[key]
 }
 
