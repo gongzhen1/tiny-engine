@@ -13,7 +13,7 @@ export default defineConfig({
       fileName: 'index'
     },
     rollupOptions: {
-      external: ['vue', '@vueuse/core', 'vue-i18n', /@opentiny\/tiny-engine.*/, /@opentiny\/vue.*/],
+      external: ['vue', 'vue-i18n', /@opentiny\/tiny-engine.*/, /@opentiny\/vue.*/],
       output: {
         globals: {
           vue: 'Vue',
