@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     outDir: 'dist',
+    sourcemap: true,
     lib: {
       entry: resolve(__dirname, 'index.ts'),
       name: 'TinyEngineRuntimeRenderer',

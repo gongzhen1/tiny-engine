@@ -45,12 +45,19 @@ const dynamicImportComponentLib = async ({ package: pkg, script }: DynamicImport
     return {}
   }
 
-  const href = window.location.href
-  const scriptUrl = script.startsWith('.') ? new URL(script, href).href : script
-
   try {
     if (!window.TinyComponentLibs[pkg]) {
-      const modules = await import(/* @vite-ignore */ scriptUrl)
+      let modules: any
+
+      if (pkg === 'element-plus') {
+        modules = await import('element-plus')
+      } else if (pkg === 'tinyengine-material') {
+        modules = await import('@11kit/tinyengine-material')
+      } else {
+        const href = window.location.href
+        const scriptUrl = script.startsWith('.') ? new URL(script, href).href : script
+        modules = await import(/* @vite-ignore */ scriptUrl)
+      }
 
       window.TinyComponentLibs[pkg] = modules
     }
