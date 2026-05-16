@@ -377,7 +377,7 @@ export const usePreviewData = ({ setFiles, store, setImportMap }: IUsePreviewDat
     styles: string[]
   }) => {
     const searchParams = new URLSearchParams(location.search)
-    const previewType = searchParams.get('previewType')
+    const previewType = searchParams.get('previewType') || 'page'
     const { appData, metaData, importMapData } = await getBasicData(basicFiles, params.scripts)
 
     if (previewType === 'page') {

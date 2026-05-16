@@ -14,6 +14,11 @@ function addBaseMiddlewarePlugin() {
           console.log('✅ [Middleware] rewriting to:', newUrl)
           req.url = newUrl
         }
+        if (req.url && req.url.startsWith('/mock')) {
+          const newUrl = '/studio' + req.url
+          console.log('✅ [Middleware] rewriting to:', newUrl)
+          req.url = newUrl
+        }
         next()
       })
     }

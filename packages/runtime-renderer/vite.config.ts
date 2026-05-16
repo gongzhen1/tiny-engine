@@ -13,11 +13,9 @@ export default defineConfig({
       fileName: 'index'
     },
     rollupOptions: {
-      // 禁用 treeshake，防止 Rollup 将 h() 创建的 VNode hoist 到模块级别，
-      // 导致组件 ref 和生命周期失效
-      treeshake: false,
       external: ['vue', '@vueuse/core', 'vue-i18n', /@opentiny\/tiny-engine.*/, /@opentiny\/vue.*/],
       output: {
+        minifyInternalExports: false,
         globals: {
           vue: 'Vue',
           '@opentiny/vue': 'TinyVue'

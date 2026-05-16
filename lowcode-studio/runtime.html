@@ -5,6 +5,36 @@
     <link rel="icon" href="/opentiny-tinyengine-logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Runtime Render</title>
+    <!-- Import Map - 必须在任何模块加载之前定义 -->
+    <script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3.4.23/dist/vue.runtime.esm-browser.js",
+        "vue/server-renderer": "https://unpkg.com/@vue/server-renderer@3.4.23/dist/server-renderer.esm-browser.js",
+        "vue-i18n": "https://unpkg.com/vue-i18n@9.9.0/dist/vue-i18n.esm-browser.js",
+        "vue-router": "https://unpkg.com/vue-router@4.0.16/dist/vue-router.esm-browser.js",
+        "@vue/devtools-api": "https://unpkg.com/@vue/devtools-api@6.5.1/lib/esm/index.js",
+        "@vueuse/core": "https://unpkg.com/@vueuse/core@9.6.0/index.mjs",
+        "@vueuse/shared": "https://unpkg.com/@vueuse/shared@9.6.0/index.mjs",
+        "axios": "https://unpkg.com/axios@1.0.0/dist/esm/axios.js",
+        "@opentiny/tiny-engine-i18n-host": "https://unpkg.com/@opentiny/tiny-engine-i18n-host@2.10.0/dist/lowcode-design-i18n-host.es.js",
+        "@opentiny/tiny-engine-builtin-component": "https://unpkg.com/@opentiny/tiny-engine-builtin-component@2.10.0/dist/index.mjs",
+        "vue-demi": "https://unpkg.com/vue-demi@0.13.11/lib/index.mjs",
+        "pinia": "https://unpkg.com/pinia@2.0.22/dist/pinia.esm-browser.js",
+        "@opentiny/vue": "https://unpkg.com/@opentiny/vue@3.22.1/dist/tiny-vue-pc.mjs",
+        "@opentiny/vue-icon": "https://unpkg.com/@opentiny/vue-icon@3.22.1/dist/tiny-vue-icon.mjs",
+        "@opentiny/vue-common": "https://unpkg.com/@opentiny/vue-common@3.22.1/dist/tiny-vue-common.mjs",
+        "@opentiny/vue-locale": "https://unpkg.com/@opentiny/vue-locale@3.22.1/dist/tiny-vue-locale.mjs",
+        "@opentiny/vue-renderless": "https://unpkg.com/@opentiny/vue-renderless@3.22.1/dist/tiny-vue-renderless.mjs",
+        "@opentiny/vue-huicharts": "https://unpkg.com/@opentiny/vue-huicharts@3.22.1/dist/tiny-vue-huicharts.mjs",
+        "echarts": "https://unpkg.com/echarts@5.4.1/dist/echarts.esm.js",
+        "@tailwindcss/browser": "https://unpkg.com/@tailwindcss/browser@4.0.0/dist/index.global.js",
+        "element-plus": "https://unpkg.com/element-plus@2.4.4/dist/index.full.mjs",
+        "@element-plus/icons-vue": "https://unpkg.com/@element-plus/icons-vue@2.3.1/dist/index.mjs",
+        "monaco-editor": "https://unpkg.com/monaco-editor@0.45.0/min/vs/editor/editor.main.js"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="app"></div>

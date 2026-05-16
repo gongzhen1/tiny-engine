@@ -9,17 +9,34 @@
  * A PARTICULAR PURPOSE. SEE THE APPLICABLE LICENSES FOR MORE DETAILS.
  *
  */
-import { initRuntimeRenderer } from '@opentiny/tiny-engine-runtime-renderer'
-import './runtime/styles/global.less'
+import { defineEntry } from '@opentiny/tiny-engine-meta-register'
+import engineConfig from '../engine.config'
+import 'virtual:svg-icons-register'
 
 async function startApp() {
-  try { 
-    await initRuntimeRenderer()
+  const { initHook, HOOK_NAME, META_SERVICE, initPreview } = await import('@opentiny/tiny-engine')
+  const { HttpService } = await import('./composable')
+
+  const beforeAppCreate = () => {
+    initHook(HOOK_NAME.useEnv, import.meta.env)
   }
-  catch (error) { 
-    //eslint-disable-next-line no-console
-    console.error('Failed to initialize runtime renderer:',error)
+
+  const registry = {
+    [META_SERVICE.Http]: HttpService,
+    'engine.config': {
+      ...engineConfig
+    }
   }
+
+  defineEntry(registry)
+
+  initPreview({
+    registry,
+    lifeCycles: {
+      beforeAppCreate
+    },
+    showToolbar: false
+  })
 }
 
 startApp()

@@ -34,7 +34,8 @@ async function startApp() {
     registry,
     lifeCycles: {
       beforeAppCreate
-    }
+    },
+    showToolbar: true
   })
 }
 

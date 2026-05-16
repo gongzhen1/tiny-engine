@@ -17,7 +17,7 @@ import './styles/vars.less'
 import defaultRegistry from './previewDefaultRegistry.js'
 import App from './App.vue'
 
-export const initPreview = ({ registry, lifeCycles = {} }) => {
+export const initPreview = ({ registry, lifeCycles = {}, showToolbar = true }) => {
   const { beforeAppCreate } = lifeCycles
 
   mergeRegistry(defaultRegistry, ...(Array.isArray(registry) ? registry : [registry]))
@@ -25,7 +25,9 @@ export const initPreview = ({ registry, lifeCycles = {} }) => {
 
   initServices()
 
-  const app = createApp(App)
+  const app = createApp(App, {
+    showToolbar: showToolbar
+  })
 
   initSvgs(app)
 

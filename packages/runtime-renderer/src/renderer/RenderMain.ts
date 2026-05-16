@@ -132,8 +132,12 @@ export default defineComponent({
       children: pageSchema.children
     }
 
+    // 用 state 的序列化值作为 key，确保 state 变化时 renderer 组件重建，
+    // 使 modelValue 等动态 props 重新解析
+    const stateKey = JSON.stringify(pageSchema.state || {})
+
     return this.pageSchema.children?.length
-      ? h(renderer, { schema: rootChildrenSchema, parent: this.pageSchema })
+      ? h(renderer, { key: stateKey, schema: rootChildrenSchema, parent: this.pageSchema })
       : [h(Loading)]
   }
 })
