@@ -37,14 +37,22 @@
     <link rel="icon" href="/studio/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Design Core Preview</title>
-    <script type="module" crossorigin src="/studio/assets/preview-BP0Lymfg.js"></script>
-    <link rel="modulepreload" crossorigin href="/studio/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <!-- Import Map - 必须在任何模块加载之前定义 -->
+
+    <script type="importmap">
+    {
+      "imports": {
+        "monaco-editor": "https://unpkg.com/monaco-editor@0.45.0/min/vs/editor/editor.main.js"
+      }
+    }
+    </script>
+    <script type="module" crossorigin src="/studio/assets/preview-BN5V0ly8.js"></script>
+    <link rel="modulepreload" crossorigin href="/studio/assets/virtual_svg-icons-register-DtLSRP4Y.js">
     <link rel="modulepreload" crossorigin href="/studio/assets/monaco-DOe87Zzv.js">
     <link rel="modulepreload" crossorigin href="/studio/assets/prettier-CFklCZ2e.js">
-    <link rel="modulepreload" crossorigin href="/studio/assets/vendor-D9udOQ0K.js">
-    <link rel="modulepreload" crossorigin href="/studio/assets/index-BHI_HLIg.js">
+    <link rel="modulepreload" crossorigin href="/studio/assets/vendor-B2Csj0BQ.js">
+    <link rel="modulepreload" crossorigin href="/studio/assets/index-DBJC5cI8.js">
     <link rel="modulepreload" crossorigin href="/studio/assets/engine.config-Bm3ULwPy.js">
-    <link rel="modulepreload" crossorigin href="/studio/assets/virtual_svg-icons-register-Bt1n9Y7-.js">
     <link rel="stylesheet" crossorigin href="/studio/assets/monaco-Dqodb0hJ.css">
     <link rel="stylesheet" crossorigin href="/studio/assets/vendor-BEqY7Pog.css">
   </head>
