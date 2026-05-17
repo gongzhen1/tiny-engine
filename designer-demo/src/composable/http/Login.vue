@@ -17,6 +17,7 @@ export default {
     const url = ref('')
 
     const openLogin = (procession, newUrl) => {
+      console.log('openLogin', newUrl)
       visible.value = true
       url.value = newUrl
 

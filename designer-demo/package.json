@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env vite",
+    "preview": "cross-env VITE_AUTH=false vite preview",
     "build:alpha": "cross-env NODE_OPTIONS=--max-old-space-size=10240 vite build --mode alpha",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=10240 vite build",
     "test": "vitest run",
@@ -21,6 +22,7 @@
     "@opentiny/vue-locale": "~3.20.0",
     "@opentiny/vue-renderless": "~3.20.0",
     "@opentiny/vue-theme": "~3.20.0",
+    "element-plus": "2.10.5",
     "@vueuse/core": "^9.6.0",
     "vue": "^3.4.21"
   },

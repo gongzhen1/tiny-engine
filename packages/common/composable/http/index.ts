@@ -117,7 +117,7 @@ const createAbortController = (config) => {
 
 // 取消所有进行中的请求
 const abortAllRequests = (message = '用户未登录，请求已取消') => {
-  abortControllers.forEach((controller, key) => {
+  abortControllers.forEach((controller) => {
     controller.abort(message)
   })
   abortControllers.clear()
@@ -141,7 +141,7 @@ const toLogin = () => {
   isUnauthorized = true
 
   abortAllRequests('认证失败，需要重新登录')
-  setNeedToLogin(true)
+  setNeedToLogin(false)
   localStorage.removeItem('engineToken')
 }
 
@@ -185,7 +185,7 @@ const requestHandler = (config) => {
 
       // 只在首次发现未登录时显示弹窗
       if (!isLoginModalShown) {
-        setNeedToLogin(true)
+        setNeedToLogin(false)
       }
 
       return new Promise(() => {})

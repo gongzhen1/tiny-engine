@@ -51,6 +51,7 @@ const preResponse = (res) => {
 }
 
 const openLogin = () => {
+  console.log('openLogin')
   if (!window.lowcode) {
     const loginDom = document.createElement('div')
     document.body.appendChild(loginDom)

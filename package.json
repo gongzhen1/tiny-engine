@@ -59,7 +59,8 @@
       "@vue/repl@4.6.1": "patches/@vue__repl@4.6.1.patch"
     },
     "overrides": {
-      "rollup": "~4.44.0"
+      "rollup": "~4.44.0",
+      "monaco-editor": "0.51.0"
     }
   }
 }
