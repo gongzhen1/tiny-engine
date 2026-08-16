@@ -165,6 +165,47 @@ export function useAppSchema() {
     }
   }
 
+  // 通过应用名(appName)查找应用ID，并加载schema
+  // 先调 /app-center/api/apps/page?name=xxx 获取应用列表，取第一个匹配项再走原 fetchAppSchema 流程
+  const fetchAppSchemaByName = async (appName: string) => {
+    if (!appName) {
+      throw new Error('Missing required "appName" parameter')
+    }
+
+    isLoading.value = true
+    error.value = null
+
+    try {
+      const searchUrl = `/app-center/api/apps/query?name=${encodeURIComponent(appName)}`
+      const response = await fetch(searchUrl)
+
+      // 兼容后端"HTTP 200 + body code:401"这种伪成功响应
+      if (!response.ok) {
+        throw new Error(`按名称查询应用失败: HTTP ${response.status}: ${response.statusText}`)
+      }
+
+      const appData = await response.json()
+
+      // eslint-disable-next-line no-console
+      console.log('[fetchAppSchemaByName] searchUrl=', searchUrl, 'response=', appData)
+
+      // 兼容后端返回 code/message 但 HTTP 200 的情况（如 {code:401,message:"Not Authorized"}）
+      if (!appData.data) {
+        throw new Error(`按名称查询应用不存在'}`)
+      }
+
+      const appId = appData.data?.id
+      isLoading.value = false
+      await fetchAppSchema(String(appId))
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : '加载应用Schema失败'
+      // eslint-disable-next-line no-console
+      console.error('按名称加载应用Schema失败:', err)
+      isLoading.value = false
+      throw err
+    }
+  }
+
   // 拉取区块schema
   const fetchBlocks = async () => {
     try {
@@ -266,6 +307,7 @@ export function useAppSchema() {
 
     // 方法
     fetchAppSchema,
+    fetchAppSchemaByName,
     fetchBlocks,
     getPageById,
 

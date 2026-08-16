@@ -52,8 +52,17 @@ function createPreviewProxy(proxyConfig) {
 
 function addBaseMiddlewarePlugin() {
   const rewriteMiddleware = (req, res, next) => {
-    if (req.url && (req.url.startsWith('/node_modules') || req.url.startsWith('/mock'))) {
-      req.url = '/studio' + req.url
+    if (req.url) {
+      // 1) /node_modules、/mock 请求：自动加 /studio 前缀，保证 base=/studio/ 下能命中静态资源
+      if (req.url.startsWith('/node_modules') || req.url.startsWith('/mock')) {
+        req.url = '/studio' + req.url
+      }
+      // 2) 新增 runtime 路径段访问：/studio/runtime/<appName>(...) 全部重写到 /studio/runtime.html，
+      //    让 runtime.js 自行从 pathname 中解析 appName。
+      //    注意排除精准的 /studio/runtime.html 本身（否则会破坏原 ?id= 访问）。
+      else if (req.url.startsWith('/studio/runtime/')) {
+        req.url = '/studio/runtime.html'
+      }
     }
     next()
   }

@@ -11,6 +11,7 @@
  */
 import { configurators } from './configurators/'
 import 'virtual:svg-icons-register'
+import './style.less'
 
 async function startApp() {
   const registry = await import('../registry')
