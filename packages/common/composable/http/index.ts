@@ -180,10 +180,10 @@ const requestHandler = (config) => {
   // 双模式认证兼容：
   // 1. 若 localStorage 存在 engineToken → 走 Bearer Token 模式（内置表单登录）
   // 2. 否则依赖 withCredentials: true 让浏览器自动携带 cookie
-  const token = localStorage.getItem('xgen:token')
-  if (token) {
+  const tokenJson = localStorage.getItem('xgen:token')
+  if (!config.headers.Authorization && tokenJson) {
     config.headers = config.headers || {}
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${JSON.parse(tokenJson).value}`
   }
 
   // 请求结束时清理 AbortController

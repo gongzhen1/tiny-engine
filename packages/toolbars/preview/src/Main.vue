@@ -22,8 +22,9 @@
             </span>
           </template>
           <div class="toolbar-preview-item">
-            <span @click="preview('page')">页面预览</span>
+            <span @click="preview('page')">开发预览</span>
             <span @click="preview('app')">应用预览</span>
+            <span @click="previewRuntime">运行预览</span>
           </div>
         </tiny-popover>
       </template>
@@ -34,7 +35,8 @@
 <script lang="ts">
 /* metaService: engine.toolbars.preview.Main */
 import { previewPage } from '@opentiny/tiny-engine-common/js/preview'
-import { useLayout, useNotify, getOptions } from '@opentiny/tiny-engine-meta-register'
+import { BASE_URL } from '@opentiny/tiny-engine-common/js/environments'
+import { useLayout, useNotify, getOptions, useCanvas } from '@opentiny/tiny-engine-meta-register'
 import { constants } from '@opentiny/tiny-engine-utils'
 import { ref } from 'vue'
 import type { Component } from 'vue'
@@ -110,10 +112,31 @@ export default {
       }
     }
 
+    const previewRuntime = () => {
+      const appId = new URLSearchParams(window.location.search).get('id')
+
+      if (!appId) {
+        useNotify({
+          type: 'warning',
+          message: '缺少应用ID，无法打开运行预览'
+        })
+        return
+      }
+
+      const currentPage = useCanvas().getCurrentPage()
+      const route = currentPage?.route
+      const hash = route ? `#/${String(route).replace(/^\/+/, '')}` : ''
+
+      const base = BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`
+      window.open(`${base}runtime.html?id=${appId}${hash}`, '_blank')
+      closePopover()
+    }
+
     return {
       poperVisible,
       clickPopover,
       preview,
+      previewRuntime,
       OPEN_DELAY
     }
   }
@@ -129,7 +152,7 @@ export default {
     cursor: pointer;
     line-height: 28px;
     padding: 0 2px;
-    &:first-child {
+    &:not(:last-child) {
       border-bottom: 1px solid var(--te-common-border-divider);
     }
   }

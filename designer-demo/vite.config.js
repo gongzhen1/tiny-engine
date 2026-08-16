@@ -1,5 +1,6 @@
 import path from 'node:path'
 import http from 'node:http'
+import https from 'node:https'
 import { defineConfig } from 'vite'
 import { useTinyEngineBaseConfig } from '@opentiny/tiny-engine-vite-config'
 
@@ -50,6 +51,92 @@ function createPreviewProxy(proxyConfig) {
   }
 }
 
+// 动态 AI 代理中间件：从 POST 请求 body 的 baseUrl 字段读取目标地址，
+// 转发到 {baseUrl}/chat/completions，支持运行时切换不同的大模型服务。
+function createAiDynamicProxyMiddleware() {
+  const AI_CHAT_PREFIXES = [
+    '/studio/app-center/api/chat/completions',
+    '/studio/app-center/api/ai/chat'
+  ]
+
+  const pickRequestModule = (protocol) => (protocol === 'https:' ? https : http)
+
+  return (req, res, next) => {
+    if (req.method !== 'POST') {
+      return next()
+    }
+
+    const isAiChat = AI_CHAT_PREFIXES.some((prefix) => req.url.startsWith(prefix))
+    if (!isAiChat) {
+      return next()
+    }
+
+    let rawBody = ''
+    req.on('data', (chunk) => {
+      rawBody += chunk
+    })
+    req.on('end', () => {
+      let baseUrl = ''
+      let body = rawBody
+
+      try {
+        const parsed = JSON.parse(rawBody || '{}')
+        baseUrl = typeof parsed.baseUrl === 'string' ? parsed.baseUrl.trim() : ''
+        // 目标大模型服务不认识 baseUrl 字段，转发前移除
+        delete parsed.baseUrl
+        body = JSON.stringify(parsed)
+      } catch (error) {
+        // 非 JSON 请求体：保留原样，baseUrl 为空时走下方兜底
+      }
+
+      if (!baseUrl) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify({ error: 'Missing "baseUrl" in request body' }))
+        return
+      }
+
+      let target
+      try {
+        target = new URL(baseUrl)
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify({ error: `Invalid "baseUrl": ${baseUrl}` }))
+        return
+      }
+
+      // baseUrl 可能自带路径前缀（如 /v1、/compatible-mode/v1），拼接 chat completions 端点
+      const basePath = target.pathname.replace(/\/+$/, '')
+      const targetPath = `${basePath}/chat/completions`
+
+      const proxyReq = pickRequestModule(target.protocol).request(
+        {
+          hostname: target.hostname,
+          port: target.port || (target.protocol === 'https:' ? 443 : 80),
+          path: targetPath,
+          method: req.method,
+          headers: {
+            ...req.headers,
+            host: target.host,
+            'content-length': Buffer.byteLength(body)
+          }
+        },
+        (proxyRes) => {
+          res.writeHead(proxyRes.statusCode, proxyRes.headers)
+          proxyRes.pipe(res)
+        }
+      )
+
+      proxyReq.on('error', (err) => {
+        res.writeHead(502, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify({ error: `AI proxy error: ${err.message}` }))
+      })
+
+      proxyReq.write(body)
+      proxyReq.end()
+    })
+  }
+}
+
 function addBaseMiddlewarePlugin() {
   const rewriteMiddleware = (req, res, next) => {
     if (req.url) {
@@ -66,13 +153,16 @@ function addBaseMiddlewarePlugin() {
     }
     next()
   }
+  const aiDynamicProxy = createAiDynamicProxyMiddleware()
   return {
     name: 'add-base-middleware',
     configureServer(server) {
       server.middlewares.use(rewriteMiddleware)
+      server.middlewares.use(aiDynamicProxy)
     },
     configurePreviewServer(server) {
       server.middlewares.use(rewriteMiddleware)
+      server.middlewares.use(aiDynamicProxy)
     }
   }
 }
@@ -102,7 +192,7 @@ export default defineConfig((configEnv) => {
     open:"http://192.168.80.1:8098/studio/?type=app&id=920&tenant=1&pageid=1982",
     proxy: {
       '/app-center/api/chat/completions': {
-        target: 'http://192.168.80.130:5090',
+        target: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
         changeOrigin: true,
         rewrite: path => path.replace('/app-center/api/chat/completions', '/api/chat/completions')
       },
