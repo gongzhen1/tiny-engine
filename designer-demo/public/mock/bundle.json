@@ -32266,8 +32266,8 @@
           "package": "tinyengine-material",
           "version": "0.0.1",
           "destructuring": true,
-          "script": "http://localhost:4175/material/te/tinyengine-material.js",
-          "css": "http://localhost:4175/material/te/tinyengine-material.css"
+          "script": "/material/te/tinyengine-material.js",
+          "css": "/material/te/tinyengine-material.css"
         }
       ]
     }

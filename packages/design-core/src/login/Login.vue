@@ -62,7 +62,8 @@ export default {
           password: state.loginData.password
         })
         .then((data: any) => {
-          localStorage.setItem('engineToken', data.token)
+          // 统一使用 xgen:token，与 layout/init/user toolbar 等模块保持一致
+          localStorage.setItem('xgen:token', data.token)
           fetchUserInfo().then((infoData: any) => {
             if (infoData) {
               setUserInfo({ ...data, ...infoData })

@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "echarts": "${VITE_CDN_DOMAIN}/echarts${versionDelimiter}5.4.1${fileDelimiter}/dist/echarts.esm.js",
+    "vue": "${VITE_CDN_DOMAIN}/vue${versionDelimiter}3.4.23${fileDelimiter}/dist/vue.esm-browser.js",
+    "@opentiny/vue-action-menu": "${VITE_CDN_DOMAIN}/@opentiny/vue-action-menu${versionDelimiter}~3.20${fileDelimiter}/dist/index.js"
+  },
+  "importStyles": {}
+}

@@ -85,7 +85,7 @@ export default {
     })
 
     const logOut = () => {
-      localStorage.removeItem('engineToken')
+      localStorage.removeItem('xgen:token')
       setNeedToLogin(true)
     }
 

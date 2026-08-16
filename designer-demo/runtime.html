@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TinyEngine Runtime Renderer</title>
+    <script type="importmap" id="tiny-engine-runtime-import-map">
+      {
+        "imports": {
+          "echarts": "https://registry.npmmirror.com/echarts/5.4.1/files/dist/echarts.esm.js",
+          "vue": "https://registry.npmmirror.com/vue/3.4.23/files/dist/vue.esm-browser.js",
+          "@opentiny/vue-action-menu": "https://registry.npmmirror.com/@opentiny/vue-action-menu/~3.20/files/lib/index.js",
+          "@opentiny/vue-common": "https://registry.npmmirror.com/@opentiny/vue-runtime/3.22.1/files/dist3/tiny-vue-common.mjs",
+          "@opentiny/vue-locale": "https://registry.npmmirror.com/@opentiny/vue-runtime/3.22.1/files/dist3/tiny-vue-locale.mjs"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/runtime.js"></script>
+  </body>
+</html>

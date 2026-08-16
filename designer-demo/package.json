@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env vite",
+    "preview": "cross-env vite preview",
     "dev:withAuth": "cross-env VITE_AUTH=true vite",
     "build:alpha": "cross-env NODE_OPTIONS=--max-old-space-size=6144 vite build --mode alpha",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=10240 vite build",
@@ -14,6 +15,7 @@
   "dependencies": {
     "@opentiny/tiny-engine": "workspace:^",
     "@opentiny/tiny-engine-meta-register": "workspace:^",
+    "@opentiny/tiny-engine-runtime-renderer": "workspace:*",
     "@opentiny/tiny-engine-utils": "workspace:*",
     "@opentiny/vue": "~3.20.0",
     "@opentiny/vue-design-smb": "~3.20.0",

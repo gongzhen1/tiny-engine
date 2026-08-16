@@ -105,14 +105,7 @@ const whiteList = [
   '/platform-center/api/user/tenant'
 ]
 // 不鉴权名单
-const notAuthList = ['app-center/api/chat/completions', 'app-center/api/ai/chat', 'app-center/api/ai/search']
 const LoginErrorCode = ['CM004', 'CM005', 'CM006', 'CM007', 'CM336', 'CM339']
-
-// 新增：重置认证状态的函数
-const resetAuthState = () => {
-  isUnauthorized = false
-  abortControllers.clear()
-}
 
 // 创建 AbortController 并关联到请求
 const createAbortController = (config) => {
@@ -147,8 +140,14 @@ const toLogin = () => {
   isUnauthorized = true
 
   abortAllRequests('认证失败，需要重新登录')
-  setNeedToLogin(true)
-  localStorage.removeItem('engineToken')
+  // 优先从 engine.config 读取 loginUrl（VITE_LOGIN_URL 已在 designer-demo 构建时注入）
+  // 留空则走内置登录表单（setNeedToLogin 会渲染 Login.vue 表单）
+  const externalLoginUrl = getMergeMeta('engine.config')?.loginUrl || ''
+  if (externalLoginUrl) {
+    window.location.href = externalLoginUrl
+  } else {
+    setNeedToLogin(true)
+  }
 }
 
 const requestHandler = (config) => {
@@ -178,32 +177,13 @@ const requestHandler = (config) => {
     config.baseURL = ''
   }
 
-  const token = localStorage.getItem('engineToken')
-  if (!token) {
-    const { setNeedToLogin, getLoginStatus } = getMetaApi(META_SERVICE.GlobalService)
-    if (!isWhiteList) {
-      isUnauthorized = true
-      controller.abort('用户未登录，请求已取消')
-
-      abortAllRequests('用户未登录，所有请求已取消')
-
-      const isLoginModalShown = getLoginStatus?.() || false
-
-      // 只在首次发现未登录时显示弹窗
-      if (!isLoginModalShown) {
-        setNeedToLogin(true)
-      }
-
-      return new Promise(() => {})
-    }
-  } else {
-    // 有 token 时重置认证状态
-    if (isUnauthorized) {
-      resetAuthState()
-    }
-    if (!notAuthList.some((url) => config.url.includes(url))) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
+  // 双模式认证兼容：
+  // 1. 若 localStorage 存在 engineToken → 走 Bearer Token 模式（内置表单登录）
+  // 2. 否则依赖 withCredentials: true 让浏览器自动携带 cookie
+  const token = localStorage.getItem('xgen:token')
+  if (token) {
+    config.headers = config.headers || {}
+    config.headers.Authorization = `Bearer ${token}`
   }
 
   // 请求结束时清理 AbortController
@@ -223,6 +203,7 @@ const responseSuccessHandler = (res) => {
   if (res.data?.error) {
     showError(res.config?.url, res?.data?.error?.message)
     const error = res.data?.error
+    // 业务侧的认证错误码（token 过期类）：与 HTTP 401 一样视为未登录，跳登录页
     if (error.code && LoginErrorCode.includes(error.code)) {
       toLogin()
 
@@ -256,7 +237,23 @@ const responseErrorHandler = (error) => {
   const { response } = error
 
   if (response) {
-    const { data } = response
+    const { data, status } = response
+
+    // 主触发：HTTP 401 / 403 状态码 → 跳登录
+    // - 401：标准未认证（登录态缺失/失效）
+    // - 403：本项目后端在未登录（无有效 cookie）时也返回 "Not Authorized"，
+    //        因此同样视为未登录并触发跳转；若是真正"已登录但无权限"的 403，
+    //        业务错误通常通过 response.data.error.code 区分（另行弹错误提示）。
+    if (status === 401) {
+      toLogin()
+
+      return Promise.reject({
+        type: 'AUTH_ERROR',
+        code: 'HTTP_401',
+        message: data?.message || '认证失败，请重新登录',
+        skipShowError: true
+      })
+    }
 
     if (data && data.code && LoginErrorCode.includes(data.code)) {
       toLogin()
@@ -286,7 +283,7 @@ export default defineService({
     axiosConfig: {
       // axios 配置
       baseURL: '',
-      withCredentials: false, // 跨域请求时是否需要使用凭证
+      withCredentials: true, // 跨域请求时携带登录态 cookie（登录系统写入的 http-only cookie）
       headers: {} // 请求头
     },
     interceptors: {

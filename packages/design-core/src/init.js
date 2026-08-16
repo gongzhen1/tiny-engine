@@ -138,7 +138,7 @@ export const init = async ({
   defaultLifeCycles.beforeAppCreate({ registry })
   beforeAppCreate?.({ registry })
 
-  const token = localStorage.getItem('engineToken')
+  const token = localStorage.getItem('xgen:token')
   if (token) {
     if (Array.isArray(createAppSignal) && createAppSignal.length) {
       try {
